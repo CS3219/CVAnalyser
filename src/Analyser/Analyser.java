@@ -7,7 +7,7 @@ import com.parser.*;
 
 public class Analyser {
 	//o--> name 1--> score
-	ArrayList<ResultDetail> results =  new ArrayList<ArrayList<String>>();
+	ArrayList<ResultDetail> results =  new ArrayList<ResultDetail>();
 	
 	public Analyser(){
 		

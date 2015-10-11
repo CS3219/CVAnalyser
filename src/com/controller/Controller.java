@@ -11,7 +11,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		
 	}
 	
-	public ArrayList<ArrayList<String>> processJobDescAndCV(String jobDesc, ArrayList<String> CV){
+	public ArrayList<ResultDetail> processJobDescAndCV(String jobDesc, ArrayList<String> CV){
 		CVParser cvParser = new CVParser();
 		JobDescParser jobDescParser = new JobDescParser();
 		Analyser analyser = new Analyser();
@@ -21,7 +21,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		}
 		JobDescObject jobDescriptions = jobDescParser.parseJobDesc(jobDesc);
 		
-		ArrayList<ArrayList<String>> results = analyser.analyze(jobDescriptions, cvs);
+		ArrayList<ResultDetail> results = analyser.analyze(jobDescriptions, cvs);
 		
 		return results;
 	}
