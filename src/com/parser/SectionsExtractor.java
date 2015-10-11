@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
@@ -19,21 +20,21 @@ public class SectionsExtractor {
     private String head = " "; 
 
     
-    public void extractSections(File cv) {
+    public CVObject extractSections(String filename) {
         BufferedReader br = null;
+        SectionsParser sp = new SectionsParser();
         
         try {
             String curLine;
-            //SectionsParser sp = new SectionsParser();
             
-            br = new BufferedReader(new FileReader(cv));
+            br = new BufferedReader(new FileReader(new File(filename)));
 
             if ((curLine = br.readLine()) != null) {
                 //sp.parseSection(KEYWORD_NAME, curLine);
-                head = KEYWORD_NAME;
-                section.add(curLine);
-                printSection();
-                section = new ArrayList<String>();
+                //head = KEYWORD_NAME;
+                //section.add(curLine);
+                //printSection();
+                //section = new ArrayList<String>();
             }
             
             String header;
@@ -46,7 +47,7 @@ public class SectionsExtractor {
                 } else if (header != head) {
                     if (!section.isEmpty()) {
                         //sp.parseSection(head, section);
-                        printSection();
+                        //printSection();
                         head = header;
                         section = new ArrayList<String>();
                         section.add(curLine);
@@ -55,10 +56,12 @@ public class SectionsExtractor {
             }
             
             //sp.parseSection(head, section);
-            printSection();
+            //printSection();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        //return sp.getCVObject();
     }
     
     private String parseSection(String line) {
