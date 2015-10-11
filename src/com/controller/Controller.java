@@ -1,4 +1,4 @@
-package Controller;
+package com.controller;
 
 import java.util.ArrayList;
 import com.parser.*;
