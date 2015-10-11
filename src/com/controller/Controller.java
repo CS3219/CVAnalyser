@@ -21,7 +21,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		}
 		JobDescObject jobDescriptions = jobDescParser.parseJobDesc(jobDesc);
 		
-		ArrayList<ResultDetail> results = analyser.analyze(jobDescriptions, cvs);
+		ArrayList<ResultDetail> results = analyser.analyse(jobDescriptions, cvs);
 		
 		return results;
 	}
