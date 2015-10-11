@@ -5,7 +5,7 @@ public class JobDescParser {
 	public JobDescObject jobDescObject;
 	
 	public JobDescParser() {
-		jobDescObject = new JobDescObject();
+		//jobDescObject = new JobDescObject();
 	}
 	
 	

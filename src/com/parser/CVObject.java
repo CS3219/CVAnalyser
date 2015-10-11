@@ -1,5 +1,7 @@
 package com.parser;
+
 import java.util.ArrayList;
+
 public class CVObject {
 	private String name;
 	private ArrayList<String> education;
