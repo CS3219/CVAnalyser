@@ -1,5 +1,94 @@
 package com.parser;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
 public class SectionsExtractor {
 
+    //private static final String[] KEYWORDS = Arrays.asList("education", "work experience");
+    private static final ArrayList<String> KEYWORDS = new ArrayList<String>
+        (Arrays.asList("education", "skills"));
+    private static final String KEYWORD_NAME = "name";
+    
+    private ArrayList<String> section = new ArrayList<String>(); 
+    private String head = " "; 
+
+    
+    public void extractSections(File cv) {
+        BufferedReader br = null;
+        
+        try {
+            String curLine;
+            //SectionsParser sp = new SectionsParser();
+            
+            br = new BufferedReader(new FileReader(cv));
+
+            if ((curLine = br.readLine()) != null) {
+                //sp.parseSection(KEYWORD_NAME, curLine);
+                head = KEYWORD_NAME;
+                section.add(curLine);
+                printSection();
+                section = new ArrayList<String>();
+            }
+            
+            String header;
+            
+            while ((curLine = br.readLine()) != null) {
+                header = parseSection(curLine);
+                //System.out.println(header);
+                if (header == null) {
+                    section.add(curLine);
+                } else if (header != head) {
+                    if (!section.isEmpty()) {
+                        //sp.parseSection(head, section);
+                        printSection();
+                        head = header;
+                        section = new ArrayList<String>();
+                        section.add(curLine);
+                    }
+                }
+            }
+            
+            //sp.parseSection(head, section);
+            printSection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private String parseSection(String line) {
+        StringTokenizer tokenizer = new StringTokenizer(line);
+        
+        if (tokenizer.hasMoreTokens()) {
+            String firstWord = tokenizer.nextToken();
+            //System.out.println(firstWord);
+            if (containsCaseInsensitive(firstWord, KEYWORDS)) {
+                return firstWord;
+            }
+        }
+        return null;
+    }
+    
+    private boolean containsCaseInsensitive(String strToCompare, ArrayList<String>list) {
+        for(String str:list) {
+            if(str.equalsIgnoreCase(strToCompare)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private void printSection() {
+        System.out.println("header: " + head);
+        
+        for (int i = 0; i < section.size(); i++) {
+            System.out.println(section.get(i));
+        }
+        
+    }
 }
