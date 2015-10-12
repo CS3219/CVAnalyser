@@ -3,8 +3,8 @@ package com.parser;
 import java.util.ArrayList;
 
 public class JobDescObject {
-	
-    private ArrayList<String> description;
+
+	private ArrayList<String> description;
 	private ArrayList<String> responsibilites;
 	private ArrayList<String> bonusQ;
 	private String residentialStatus;
@@ -12,24 +12,28 @@ public class JobDescObject {
 	private ArrayList<String> eduReq;
 	private ArrayList<String> techSkillReq;
 
-	public JobDescObject(String position, ArrayList<String> eduReq, 
-	        ArrayList<String> techSkillReq) {
-		
-	    this.position = position;
+	public JobDescObject(String position, ArrayList<String> eduReq, ArrayList<String> techSkillReq) {
+
+		this.position = position;
 		this.eduReq = eduReq;
 		this.techSkillReq = techSkillReq;
 	}
-	
+
 	public String getPosition() {
 		return position;
 	}
-	
+
 	public ArrayList<String> getEduReq() {
+		SectionsParser sectionParser = new SectionsParser();
+		eduReq = sectionParser.parseEducation(eduReq);
+
 		return eduReq;
 	}
-	
+
 	public ArrayList<String> getTechSkillReq() {
+		SectionsParser sectionParser = new SectionsParser();
+		techSkillReq = sectionParser.parseSkills(techSkillReq);
 		return techSkillReq;
 	}
-	
+
 }

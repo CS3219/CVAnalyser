@@ -30,7 +30,7 @@ public class SectionsParser {
 	}
 	
 	//parses education by spaces for now
-	private ArrayList<String> parseEducation(ArrayList<String> lines) {
+	public ArrayList<String> parseEducation(ArrayList<String> lines) {
 		ArrayList<String> parsedEdu = new ArrayList<String>();
 		for(int i=0;i<lines.size();i++) {
 			String line = lines.get(i);
@@ -47,6 +47,8 @@ public class SectionsParser {
 			String parsed ="";
 			for(int k=0;k<tokens.length;k++) {
 				parsed = parsed + tokens[k] + " ";
+				parsed.replaceAll("\\s+", " ");
+				parsed = parsed.toLowerCase();
 			}
 			
 			parsedEdu.add(parsed.trim());
@@ -55,7 +57,7 @@ public class SectionsParser {
 	}
 	
 	//parses skills by separating them using commas, removes unnecessary words
-	private ArrayList<String> parseSkills(ArrayList<String> lines) {
+	public ArrayList<String> parseSkills(ArrayList<String> lines) {
 		ArrayList<String> parsedSkills = new ArrayList<String>();
 		
 		for(int i=0;i<lines.size();i++) {
@@ -64,6 +66,8 @@ public class SectionsParser {
 			String keywords = line.replaceAll(regex, " ");
 			String tokens[] = keywords.split("\\s*,\\s*");
 			for(int j=0;j<tokens.length;j++) {
+				tokens[j].replaceAll("\\s+", " ");
+				tokens[j] = tokens[j].toLowerCase();
 				parsedSkills.add(tokens[j].trim());
 			}
 		}
