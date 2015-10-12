@@ -4,7 +4,11 @@ import java.util.StringTokenizer;
 
 public class JobDescParser {
 	
-    JobDescObject parseJobDesc(String position, String eduReq, String techSkills) {
+	public JobDescParser() {
+		
+	}
+	
+    public JobDescObject parseJobDesc(String position, String eduReq, String techSkills) {
         StringTokenizer st = new StringTokenizer(eduReq, "\n");
         ArrayList<String> edu = new ArrayList<String>();
         

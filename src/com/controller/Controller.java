@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.ui.ConvertPDF;
@@ -21,7 +22,13 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		ConvertPDF convert = new ConvertPDF();
 
 		for(int i = 0; i < CV.size(); i++) {
-			String fileName = convert.convertTxtToPDF(CV.get(i));
+			String fileName = null;
+			try {
+				fileName = convert.convertTxtToPDF(CV.get(i));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			cvs.add(cvParser.parseCV(fileName));
 		}
 		

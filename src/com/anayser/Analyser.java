@@ -13,10 +13,9 @@ public class Analyser {
 		
 	}
 	
-	public ArrayList<ResultDetail> analyse(JobDescObject jobDesc, ArrayList<CVObject> cvs){
+	public ArrayList<ArrayList<String>> analyse(JobDescObject jobDesc, ArrayList<CVObject> cvs){
 		ArrayList<String> cvSkill;
 		ArrayList<String> cvEducation;
-		ArrayList<String> temp;
 		ArrayList<String> skillReq = jobDesc.getTechSkillReq();
 		ArrayList<String> eduReq = jobDesc.getEduReq();
 		int skillScore = 0, eduScore = 0;
@@ -32,7 +31,20 @@ public class Analyser {
 			results.add(resultDetail);	
 		}
 		sortResults();
-		return results;
+		ArrayList<ArrayList<String>> results_2nd = convert();
+		return results_2nd;
+	}
+
+	private ArrayList<ArrayList<String>> convert() {
+		ArrayList<String> temp = new ArrayList<String>();
+		ArrayList<ArrayList<String>> results_2nd = new ArrayList<ArrayList<String>> ();
+		for(int i = 0; i < results.size(); i++) {
+			temp.add(results.get(i).name);
+			temp.add(results.get(i).scoreInString);
+			results_2nd.add(temp);
+			temp.clear();
+		}
+		return results_2nd;
 	}
 
 	private void sortResults() {
