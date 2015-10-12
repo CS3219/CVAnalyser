@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>CV Analyser</title>
+<style type="text/css">
+body {
+	background-image: url("bg-image.jpg");
+	background-color: #000000;
+}
+
+#header, #footer {
+	font-size: large;
+	padding: 0.3em;
+	background: #000000;
+}
+
+table {
+	margin: 120px;
+	padding-top: 2px;
+	padding-bottom: 120px;
+	padding-right: 40px;
+	padding-left: 40px;
+	background-color: #ffffff;
+	border: 2px solid black;
+	opacity: 0.6;
+	filter: alpha(opacity = 60); /* For IE8 and earlier */
+}
+
+td {
+	padding: 10px;
+}
+</style>
+</head>
+
+<body>
+	<div align="center">
+		<form action="uploadFile.php" method="post"
+			enctype="multipart/form-data">
+			<table>
+				<tr>
+					<td style="border-bottom: 1pt solid black" colspan="2">
+						<h1>CV Analyser:</h1>
+					</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 20px">CV:</td>
+					<td style="padding-top: 20px"><input type="file"
+						name="upload_cv" id="upload_cv" accept="application/pdf" /></td>
+				</tr>
+				<tr>
+					<td>Job Description:</td>
+					<td><input type="file" name="upload_jobdesc"
+						accept="application/pdf" /></td>
+				</tr>
+				
+				<tr>
+					<td colspan="2">Job Description:</td>
+				</tr>
+				<tr>
+					<td>Position:</td>
+					<td> <input type="text" name="position"></td>
+				</tr>
+				
+				<tr>
+					<td>Educational Requirements:</td>
+					<td> <input type="text" name="eduReq"></td>
+				</tr>
+				
+				<tr>
+					<td>Technical Skills:</td>
+					<td> <input type="text" name="techSkills"></td>
+				</tr>
+				
+				<tr>
+					<td style="padding-top: 60px" align="center" colspan="2"><input
+						type="submit" value="Submit"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+
+</html>
