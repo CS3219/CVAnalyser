@@ -1,8 +1,9 @@
 package com.controller;
 
 import java.util.ArrayList;
+
+import com.anayser.*;
 import com.parser.*;
-import Analyser.*;
 
 public class Controller {
 ArrayList<CVObject> cvs = new ArrayList<CVObject>();

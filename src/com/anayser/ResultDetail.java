@@ -1,4 +1,4 @@
-package Analyser;
+package com.anayser;
 
 public class ResultDetail {
 	public String scoreInString;
