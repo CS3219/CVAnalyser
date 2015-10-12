@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import javax.swing.JTextArea;
 
 import com.controller.Controller;
+import java.awt.Font;
+import javax.swing.JScrollPane;
 
 public class UserInterface extends JFrame {
 
@@ -27,13 +29,13 @@ public class UserInterface extends JFrame {
 	private JTextField fileSelected;
 	private JTextField txtPosition;
 	private JTextField txtEducationalRequirements;
-	private JTextField eduValue;
 	private JTextField txtTechnicalSkillsRequired;
-	private JTextField techValue;
 	private JButton btnSubmit;
 	private JTextField txtPosition_1;
 	private JTextField positionValue;
-	private JTextField displayResults;
+	private JTextField txtResult;
+	private JTextArea eduValue;
+	private JTextArea techValue;
 
 	/**
 	 * Launch the application.
@@ -56,7 +58,7 @@ public class UserInterface extends JFrame {
 	 */
 	public UserInterface() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 554, 470);
+		setBounds(100, 100, 554, 549);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -66,6 +68,7 @@ public class UserInterface extends JFrame {
 		Controller control = new Controller();
 		
 		txtCv = new JTextField();
+		txtCv.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtCv.setText("CV: ");
 		txtCv.setEditable(false);
 		txtCv.setBounds(10, 24, 86, 20);
@@ -73,7 +76,7 @@ public class UserInterface extends JFrame {
 		txtCv.setColumns(10);
 		
 		fileSelected = new JTextField();
-		fileSelected.setBounds(119, 24, 206, 20);
+		fileSelected.setBounds(119, 24, 310, 20);
 		contentPane.add(fileSelected);
 		fileSelected.setColumns(10);
 		
@@ -96,40 +99,38 @@ public class UserInterface extends JFrame {
 	        
 	    });
 	    getContentPane().add(browse);
-		browse.setBounds(335, 23, 89, 23);
+		browse.setBounds(439, 23, 89, 23);
 		contentPane.add(browse);
 		
 		txtPosition = new JTextField();
+		txtPosition.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtPosition.setEditable(false);
 		txtPosition.setText("Job Description: ");
-		txtPosition.setBounds(10, 78, 181, 20);
+		txtPosition.setBounds(10, 68, 181, 20);
 		contentPane.add(txtPosition);
 		txtPosition.setColumns(10);
 		
 		txtEducationalRequirements = new JTextField();
+		txtEducationalRequirements.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtEducationalRequirements.setEditable(false);
 		txtEducationalRequirements.setText("Educational Requirements: ");
 		txtEducationalRequirements.setBounds(10, 140, 199, 20);
 		contentPane.add(txtEducationalRequirements);
 		txtEducationalRequirements.setColumns(10);
 		
-		eduValue = new JTextField();
-		eduValue.setBounds(219, 140, 296, 20);
-		contentPane.add(eduValue);
-		eduValue.setColumns(10);
-		
 		txtTechnicalSkillsRequired = new JTextField();
+		txtTechnicalSkillsRequired.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtTechnicalSkillsRequired.setEditable(false);
 		txtTechnicalSkillsRequired.setText("Technical Skills Required: ");
-		txtTechnicalSkillsRequired.setBounds(10, 171, 199, 23);
+		txtTechnicalSkillsRequired.setBounds(10, 207, 199, 23);
 		contentPane.add(txtTechnicalSkillsRequired);
 		txtTechnicalSkillsRequired.setColumns(10);
 		
-		techValue = new JTextField();
-		techValue.setBounds(219, 171, 296, 22);
-		contentPane.add(techValue);
-		techValue.setColumns(10);
-		
+		JTextArea displayResults = new JTextArea();
+		displayResults.setEditable(false);
+		displayResults.setBounds(10, 325, 505, 140);
+		contentPane.add(displayResults);
+
 		btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,16 +141,24 @@ public class UserInterface extends JFrame {
 				
 				cvNames.add(fileName);
 				 ArrayList<ArrayList<String>> results = control.processJobDescAndCV(position, eduReq, techSkills, cvNames);
+				 String result="";		 
+				 for (ArrayList<String> l1 : results) {
+					 result = "";
+					   for (String s : l1) {
+					       result +=s; 
+					   }
+					} 
 				 
-				 displayResults.setText(results.toString());
-				  System.out.println(results.toString());
+				 displayResults.append(result+"\n");
+				 
 			}
 			
 		});
-		btnSubmit.setBounds(120, 397, 89, 23);
+		btnSubmit.setBounds(119, 476, 89, 23);
 		contentPane.add(btnSubmit);
 		
 		txtPosition_1 = new JTextField();
+		txtPosition_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtPosition_1.setEditable(false);
 		txtPosition_1.setText("Position: ");
 		txtPosition_1.setBounds(10, 109, 199, 20);
@@ -160,11 +169,6 @@ public class UserInterface extends JFrame {
 		positionValue.setBounds(219, 109, 296, 20);
 		contentPane.add(positionValue);
 		positionValue.setColumns(10);
-		
-		displayResults = new JTextField();
-		displayResults.setBounds(10, 213, 505, 173);
-		contentPane.add(displayResults);
-		displayResults.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Clear");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -178,7 +182,25 @@ public class UserInterface extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(318, 397, 89, 23);
+		btnNewButton.setBounds(321, 476, 89, 23);
 		contentPane.add(btnNewButton);
+		
+		txtResult = new JTextField();
+		txtResult.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtResult.setEditable(false);
+		txtResult.setText("Result: ");
+		txtResult.setBounds(10, 294, 86, 20);
+		contentPane.add(txtResult);
+		txtResult.setColumns(10);
+		
+		eduValue = new JTextArea();
+		eduValue.setBounds(10, 163, 505, 33);
+		contentPane.add(eduValue);
+		
+		techValue = new JTextArea();
+		techValue.setBounds(10, 241, 505, 42);
+		contentPane.add(techValue);
+		
+
 	}
 }
