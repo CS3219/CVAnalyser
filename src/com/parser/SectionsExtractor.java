@@ -52,13 +52,15 @@ public class SectionsExtractor {
                         //printSection();
                         head = header;
                         section = new ArrayList<String>();
-                        section.add(curLine);
+                        //section.add(curLine);
                     }
                 }
             }
             
             sp.parseSections(head, section);
             //printSection();
+            
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

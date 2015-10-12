@@ -16,7 +16,7 @@ public class JobDescParser {
             edu.add(st.nextToken());
         }
         
-        st = new StringTokenizer(techSkills, "\n,");
+        st = new StringTokenizer(techSkills, "\n.");
         ArrayList<String> tech = new ArrayList<String>();
         
         while(st.hasMoreTokens()) {
