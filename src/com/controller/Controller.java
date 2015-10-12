@@ -39,7 +39,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		System.out.println("Position: " + position);
 		System.out.println("Education: "+eduReq);
 		System.out.println("Technical: " +techSkills);*/
-		
+		cvs.clear();
 		return results;
 	}
 
