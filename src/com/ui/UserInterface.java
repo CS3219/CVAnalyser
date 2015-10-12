@@ -33,6 +33,7 @@ public class UserInterface extends JFrame {
 	private JButton btnSubmit;
 	private JTextField txtPosition_1;
 	private JTextField positionValue;
+	private JTextField displayResults;
 
 	/**
 	 * Launch the application.
@@ -138,8 +139,12 @@ public class UserInterface extends JFrame {
 				String fileName = fileSelected.getText();
 				
 				cvNames.add(fileName);
-				control.processJobDescAndCV(position, eduReq, techSkills, cvNames);
+				 ArrayList<ArrayList<String>> results = control.processJobDescAndCV(position, eduReq, techSkills, cvNames);
+				 
+				 displayResults.setText(results.toString());
+				  System.out.println(results.toString());
 			}
+			
 		});
 		btnSubmit.setBounds(219, 397, 89, 23);
 		contentPane.add(btnSubmit);
@@ -156,9 +161,9 @@ public class UserInterface extends JFrame {
 		contentPane.add(positionValue);
 		positionValue.setColumns(10);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(20, 216, 495, 170);
-		contentPane.add(textArea);
+		displayResults = new JTextField();
+		displayResults.setBounds(10, 213, 505, 173);
+		contentPane.add(displayResults);
+		displayResults.setColumns(10);
 	}
 }
