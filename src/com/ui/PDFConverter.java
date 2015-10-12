@@ -1,4 +1,4 @@
-package com.UI;
+package com.ui;
 
 import java.io.File;
 import java.io.FileInputStream;

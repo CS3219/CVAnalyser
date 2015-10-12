@@ -2,8 +2,8 @@ package com.controller;
 
 import java.util.ArrayList;
 
-import com.UI.ConvertPDF;
-import com.UI.PDFConverter;
+import com.ui.ConvertPDF;
+import com.ui.PDFConverter;
 import com.anayser.*;
 import com.parser.*;
 

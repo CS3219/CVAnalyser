@@ -1,4 +1,4 @@
-package com.UI;
+package com.ui;
 
 import java.io.IOException;
 import java.io.PrintWriter;
