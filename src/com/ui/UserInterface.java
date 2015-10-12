@@ -146,7 +146,7 @@ public class UserInterface extends JFrame {
 			}
 			
 		});
-		btnSubmit.setBounds(219, 397, 89, 23);
+		btnSubmit.setBounds(120, 397, 89, 23);
 		contentPane.add(btnSubmit);
 		
 		txtPosition_1 = new JTextField();
@@ -165,5 +165,20 @@ public class UserInterface extends JFrame {
 		displayResults.setBounds(10, 213, 505, 173);
 		contentPane.add(displayResults);
 		displayResults.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Clear");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayResults.setText("");
+				fileSelected.setText("");
+				positionValue.setText("");
+				eduValue.setText("");
+				techValue.setText("");
+				
+				
+			}
+		});
+		btnNewButton.setBounds(318, 397, 89, 23);
+		contentPane.add(btnNewButton);
 	}
 }
