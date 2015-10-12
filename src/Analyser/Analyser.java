@@ -17,7 +17,7 @@ public class Analyser {
 		ArrayList<String> cvSkill;
 		ArrayList<String> cvEducation;
 		ArrayList<String> temp;
-		ArrayList<String> skillReq = jobDesc.getSkills();
+		ArrayList<String> skillReq = jobDesc.getTechSkillReq();
 		ArrayList<String> eduReq = jobDesc.getEduReq();
 		int skillScore = 0, eduScore = 0;
 		double score = 0;
