@@ -34,18 +34,18 @@ public class Analyser {
 		sortResults();
 		ArrayList<ArrayList<String>> results_2nd = convert();
 		
-		for(int k = 0; k < results_2nd.size(); k++) {
-			for(int j = 0; j<results_2nd.get(k).size(); j++){
-				System.out.println("results = " + results_2nd.get(k).get(j));
-			}
-		}
+		//for(int k = 0; k < results_2nd.size(); k++) {
+			//for(int j = 0; j<results_2nd.get(k).size(); j++){
+				//System.out.println("results = " + results_2nd.get(k).get(j));
+		//	}
+		//}
 		return results_2nd;
 	}
 
 	private ArrayList<ArrayList<String>> convert() {
 		ArrayList<String> temp = new ArrayList<String>();
 		ArrayList<ArrayList<String>> results_2nd = new ArrayList<ArrayList<String>> ();
-		System.out.println("size = " + results.size());
+		//System.out.println("size = " + results.size());
 		for(int i = 0; i < results.size(); i++) {
 			temp.add(results.get(i).name);
 		//	System.out.println("name = " + temp.get(0));
@@ -75,7 +75,7 @@ public class Analyser {
 		for(int i = 0; i < eduReq.size(); i++) {
 			for(int j = 0; j < cvEducation.size(); j++) {
 				System.out.println("eduReq = " + eduReq.get(i) + " cvEdu = " + cvEducation.get(j));
-				if(eduReq.get(i).equals(cvEducation.get(j))) {
+				if(cvEducation.get(j).contains(eduReq.get(i))) {
 					eduNum++;
 				}
 			}
@@ -92,7 +92,7 @@ public class Analyser {
 		int skillNum = 0;
 		for(int i = 0; i < skillReq.size(); i++) {
 			for(int j = 0; j < cvSkill.size(); j++) {
-				System.out.println("skillReq = " + skillReq.get(i) + " cvSkill = " + cvSkill.get(j));
+			//	System.out.println("skillReq = " + skillReq.get(i) + " cvSkill = " + cvSkill.get(j));
 			skillReq.set(i, skillReq.get(i).toLowerCase());
 				if(skillReq.get(i).equals(cvSkill.get(j))) {
 					skillNum++;
