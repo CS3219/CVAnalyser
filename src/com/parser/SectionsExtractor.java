@@ -30,7 +30,9 @@ public class SectionsExtractor {
             br = new BufferedReader(new FileReader(new File(filename)));
 
             if ((curLine = br.readLine()) != null) {
-                //sp.parseSection(KEYWORD_NAME, curLine);
+                ArrayList<String> cur = new ArrayList<String>();
+                cur.add(curLine);
+                sp.parseSections(KEYWORD_NAME, cur);
                 //head = KEYWORD_NAME;
                 //section.add(curLine);
                 //printSection();
@@ -46,7 +48,7 @@ public class SectionsExtractor {
                     section.add(curLine);
                 } else if (header != head) {
                     if (!section.isEmpty()) {
-                        //sp.parseSection(head, section);
+                        sp.parseSections(head, section);
                         //printSection();
                         head = header;
                         section = new ArrayList<String>();
@@ -55,13 +57,13 @@ public class SectionsExtractor {
                 }
             }
             
-            //sp.parseSection(head, section);
+            sp.parseSections(head, section);
             //printSection();
         } catch (IOException e) {
             e.printStackTrace();
         }
         
-        //return sp.getCVObject();
+        return sp.getCVObject();
     }
     
     private String parseSection(String line) {
