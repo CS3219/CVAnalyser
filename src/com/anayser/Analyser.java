@@ -32,6 +32,12 @@ public class Analyser {
 		}
 		sortResults();
 		ArrayList<ArrayList<String>> results_2nd = convert();
+		
+		for(int k = 0; k < results_2nd.size(); k++) {
+			for(int j = 0; j<results_2nd.get(k).size(); j++){
+				System.out.println("results = " + results_2nd.get(k).get(j));
+			}
+		}
 		return results_2nd;
 	}
 
@@ -40,9 +46,13 @@ public class Analyser {
 		ArrayList<ArrayList<String>> results_2nd = new ArrayList<ArrayList<String>> ();
 		for(int i = 0; i < results.size(); i++) {
 			temp.add(results.get(i).name);
+		//	System.out.println("name = " + temp.get(0));
 			temp.add(results.get(i).scoreInString);
-			results_2nd.add(temp);
+		//	System.out.println("score = " + temp.get(1));
+			results_2nd.add(new ArrayList<String>());
+			results_2nd.get(i).addAll(temp);
 			temp.clear();
+			//System.out.println("results = " + results_2nd.get(i).get(0));
 		}
 		return results_2nd;
 	}
