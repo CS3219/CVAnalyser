@@ -21,6 +21,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		Analyser analyser = new Analyser();
 		ConvertPDF convert = new ConvertPDF();
 
+		cvs.clear();
 		for(int i = 0; i < CV.size(); i++) {
 			String fileName = null;
 			try {
