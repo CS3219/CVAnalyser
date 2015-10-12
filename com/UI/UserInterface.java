@@ -14,6 +14,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ArrayList;
+
+import javax.swing.JTextArea;
+
+import com.controller.Controller;
 
 public class UserInterface extends JFrame {
 
@@ -50,11 +55,14 @@ public class UserInterface extends JFrame {
 	 */
 	public UserInterface() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 541, 413);
+		setBounds(100, 100, 554, 470);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		ArrayList<String> cvNames = new ArrayList<String>();
+		Controller control = new Controller();
 		
 		txtCv = new JTextField();
 		txtCv.setText("CV: ");
@@ -100,24 +108,24 @@ public class UserInterface extends JFrame {
 		txtEducationalRequirements = new JTextField();
 		txtEducationalRequirements.setEditable(false);
 		txtEducationalRequirements.setText("Educational Requirements: ");
-		txtEducationalRequirements.setBounds(10, 185, 199, 20);
+		txtEducationalRequirements.setBounds(10, 140, 199, 20);
 		contentPane.add(txtEducationalRequirements);
 		txtEducationalRequirements.setColumns(10);
 		
 		eduValue = new JTextField();
-		eduValue.setBounds(219, 185, 296, 20);
+		eduValue.setBounds(219, 140, 296, 20);
 		contentPane.add(eduValue);
 		eduValue.setColumns(10);
 		
 		txtTechnicalSkillsRequired = new JTextField();
 		txtTechnicalSkillsRequired.setEditable(false);
 		txtTechnicalSkillsRequired.setText("Technical Skills Required: ");
-		txtTechnicalSkillsRequired.setBounds(10, 231, 199, 23);
+		txtTechnicalSkillsRequired.setBounds(10, 171, 199, 23);
 		contentPane.add(txtTechnicalSkillsRequired);
 		txtTechnicalSkillsRequired.setColumns(10);
 		
 		techValue = new JTextField();
-		techValue.setBounds(219, 231, 296, 22);
+		techValue.setBounds(219, 171, 296, 22);
 		contentPane.add(techValue);
 		techValue.setColumns(10);
 		
@@ -127,23 +135,30 @@ public class UserInterface extends JFrame {
 				String position = positionValue.getText();
 				String eduReq=eduValue.getText();
 				String techSkills = techValue.getText();
-
+				String fileName = fileSelected.getText();
 				
+				cvNames.add(fileName);
+				control.processJobDescAndCV(position, eduReq, techSkills, cvNames);
 			}
 		});
-		btnSubmit.setBounds(219, 302, 89, 23);
+		btnSubmit.setBounds(219, 397, 89, 23);
 		contentPane.add(btnSubmit);
 		
 		txtPosition_1 = new JTextField();
 		txtPosition_1.setEditable(false);
 		txtPosition_1.setText("Position: ");
-		txtPosition_1.setBounds(10, 139, 199, 20);
+		txtPosition_1.setBounds(10, 109, 199, 20);
 		contentPane.add(txtPosition_1);
 		txtPosition_1.setColumns(10);
 		
 		positionValue = new JTextField();
-		positionValue.setBounds(219, 139, 296, 20);
+		positionValue.setBounds(219, 109, 296, 20);
 		contentPane.add(positionValue);
 		positionValue.setColumns(10);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(20, 216, 495, 170);
+		contentPane.add(textArea);
 	}
 }
