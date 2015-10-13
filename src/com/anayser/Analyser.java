@@ -18,11 +18,12 @@ public class Analyser {
 		ArrayList<String> cvEducation;
 		ArrayList<String> skillReq = jobDesc.getTechSkillReq();
 		ArrayList<String> eduReq = jobDesc.getEduReq();
-		int skillScore = 0, eduScore = 0;
-		double score = 0;
+		double skillScore = 0.0, eduScore = 0.0;
+		double score = 0.0;
 
 		System.out.println("cv size = "+cvs.size());
 		for(int i = 0; i < cvs.size(); i++){
+			System.out.println("cvname = " + cvs.get(i).getName());
 			cvSkill = cvs.get(i).getSkills();
 			cvEducation = cvs.get(i).getEducation();
 			skillScore = compareSkill(skillReq, cvSkill);
@@ -31,7 +32,7 @@ public class Analyser {
 			ResultDetail resultDetail = new ResultDetail(cvs.get(i).getName(), Double.toString(score), score); 
 			results.add(resultDetail);	
 		}
-		sortResults();
+	//	sortResults();
 		ArrayList<ArrayList<String>> results_2nd = convert();
 		
 		//for(int k = 0; k < results_2nd.size(); k++) {
@@ -48,9 +49,9 @@ public class Analyser {
 		//System.out.println("size = " + results.size());
 		for(int i = 0; i < results.size(); i++) {
 			temp.add(results.get(i).name);
-		//	System.out.println("name = " + temp.get(0));
+			System.out.println("name = " + temp.get(0));
 			temp.add(results.get(i).scoreInString);
-		//	System.out.println("score = " + temp.get(1));
+			System.out.println("score = " + temp.get(1));
 			results_2nd.add(new ArrayList<String>());
 			results_2nd.get(i).addAll(temp);
 			temp.clear();
@@ -70,17 +71,17 @@ public class Analyser {
 		
 	}
 
-	private int compareEdu(ArrayList<String> eduReq, ArrayList<String> cvEducation) {
+	private double compareEdu(ArrayList<String> eduReq, ArrayList<String> cvEducation) {
 		int eduNum = 0;
 		for(int i = 0; i < eduReq.size(); i++) {
 			for(int j = 0; j < cvEducation.size(); j++) {
-				System.out.println("eduReq = " + eduReq.get(i) + " cvEdu = " + cvEducation.get(j));
+				//System.out.println("eduReq = " + eduReq.get(i) + " cvEdu = " + cvEducation.get(j));
 				if(cvEducation.get(j).contains(eduReq.get(i))) {
 					eduNum++;
 				}
 			}
 		}
-		int eduScore = eduNum / eduReq.size();
+		double eduScore = (double)eduNum / eduReq.size();
 		return eduScore;
 		
 	}
@@ -88,18 +89,20 @@ public class Analyser {
 	//score 
 	//= 0.25*skill_score + 0.25*education_score 
 	//+ 0.25*work_experience_score + 0.25*language_score
-	private int compareSkill(ArrayList<String> skillReq, ArrayList<String> cvSkill) {
+	private double compareSkill(ArrayList<String> skillReq, ArrayList<String> cvSkill) {
 		int skillNum = 0;
 		for(int i = 0; i < skillReq.size(); i++) {
 			for(int j = 0; j < cvSkill.size(); j++) {
-			//	System.out.println("skillReq = " + skillReq.get(i) + " cvSkill = " + cvSkill.get(j));
+		    System.out.println("skillReq = " + skillReq.get(i) + " cvSkill = " + cvSkill.get(j));
 			skillReq.set(i, skillReq.get(i).toLowerCase());
 				if(skillReq.get(i).equals(cvSkill.get(j))) {
 					skillNum++;
+					 System.out.println("skillnum = " + skillNum);
 				}
 			}
 		}
-		int skillScore = skillNum / skillReq.size();
+		double skillScore = (double)skillNum / skillReq.size();
+		System.out.println("skillscore = "+skillReq.size());
 		return skillScore;
 		
 	}
