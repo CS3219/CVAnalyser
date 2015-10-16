@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import edu.stanford.nlp.pipeline.*;
+import edu.stanford.nlp.util.CoreMap;
+import edu.stanford.nlp.ling.*; 
+import edu.stanford.nlp.ling.CoreAnnotations.*;  
 
 public class SectionsExtractor {
 
@@ -49,7 +51,7 @@ public class SectionsExtractor {
                 } else if (header != head) {
                     if (!section.isEmpty()) {
                         sp.parseSections(head, section);
-                        //printSection();
+                        printSection();
                         head = header;
                         section = new ArrayList<String>();
                         //section.add(curLine);
@@ -58,7 +60,7 @@ public class SectionsExtractor {
             }
             
             sp.parseSections(head, section);
-            //printSection();
+            printSection();
             
             br.close();
         } catch (IOException e) {
@@ -91,11 +93,28 @@ public class SectionsExtractor {
     }
     
     private void printSection() {
-        System.out.println("header: " + head);
+        /*System.out.println("header: " + head);
         
         for (int i = 0; i < section.size(); i++) {
             System.out.println(section.get(i));
+        }*/
+        
+        Properties props = new Properties(); 
+        props.put("annotators", "tokenize, ssplit, pos, lemma"); 
+        StanfordCoreNLP pipeline = new StanfordCoreNLP(props, false);
+        String text = section.get(0); 
+        Annotation document = pipeline.process(text);  
+
+        for(CoreMap sentence: document.get(SentencesAnnotation.class))
+        {    
+            for(CoreLabel token: sentence.get(TokensAnnotation.class))
+            {       
+                String word = token.get(TextAnnotation.class);      
+                String lemma = token.get(LemmaAnnotation.class); 
+                System.out.println("lemmatized version :" + lemma);
+            }
         }
+
         
     }
 }
