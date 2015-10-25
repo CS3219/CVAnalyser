@@ -24,14 +24,14 @@ public class JobDescObject {
 	}
 
 	public ArrayList<String> getEduReq() {
-		SectionsParser sectionParser = new SectionsParser();
+		SectionParser sectionParser = new SectionParser();
 		eduReq = sectionParser.parseEducation(eduReq);
 
 		return eduReq;
 	}
 
 	public ArrayList<String> getTechSkillReq() {
-		SectionsParser sectionParser = new SectionsParser();
+		SectionParser sectionParser = new SectionParser();
 		techSkillReq = sectionParser.parseSkills(techSkillReq);
 		return techSkillReq;
 	}

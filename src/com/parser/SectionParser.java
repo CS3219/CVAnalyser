@@ -1,11 +1,11 @@
 package com.parser;
 import java.util.ArrayList;
 
-public class SectionsParser {
+public class SectionParser {
 	
 	private CVObject cvObject;
 	
-	public SectionsParser() {
+	public SectionParser() {
 		cvObject = new CVObject();
 	}
 	
