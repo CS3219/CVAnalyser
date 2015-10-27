@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,8 +23,9 @@ public class Storage {
 	private ArrayList<JobDescObject> jobDescObjs;
 	private ArrayList<CVObject> allCV;
 	private ArrayList<JobDescObject> allJobDesc;
+	private HashMap<String, Boolean> experienceLib;
+	private HashMap<String, Boolean> skillsLib;
 
-	
 	public Storage() throws IOException{
 		cvObjs = new ArrayList<CVObject>();
 		jobDescObjs = new ArrayList<JobDescObject>();
@@ -44,7 +46,7 @@ public class Storage {
 		writeStringToFile(json, cvFile);
 	}
 	
-		public void writeJobDescToFile(ArrayList<JobDescObject> jobDesObj) throws IOException{
+		public void writeJobDescToFile(JobDescObject jobDesObj) throws IOException{
 			
 			String json = convertJobDescToString(jobDesObj);
 			writeStringToFile(json, jobDescFile);
@@ -59,7 +61,7 @@ public class Storage {
 			return json;
 		}
 		
-		private String convertJobDescToString(ArrayList<JobDescObject> jobDesObj) {
+		private String convertJobDescToString(JobDescObject jobDesObj) {
 			GsonBuilder gsonBuilder = new GsonBuilder();
 			gsonBuilder.setPrettyPrinting().registerTypeAdapter(CVObject.class, new jobDescSerializer());
 			Gson gson = gsonBuilder.create();

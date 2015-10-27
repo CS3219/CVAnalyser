@@ -7,6 +7,7 @@ import com.ui.ConvertPDF;
 import com.ui.PDFConverter;
 import com.anayser.*;
 import com.parser.*;
+import com.storage.*;
 
 public class Controller {
 ArrayList<CVObject> cvs = new ArrayList<CVObject>();
@@ -79,7 +80,12 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 	}
 	
 	public void storeInLanguageHashMap(ArrayList<String> keyword){
-		//Storage storage = new Storage();
+		try {
+			Storage storage = new Storage();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
