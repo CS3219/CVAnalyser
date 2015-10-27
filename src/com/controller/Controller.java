@@ -43,6 +43,68 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		
 		return results;
 	}
+	
+	public JobDescObject parseJobDesc(String jobDescFileName){
+		JobDescParser jobDescParser = new JobDescParser();
+		ConvertPDF convert = new ConvertPDF();
+		ArrayList<JobDescObject> jobDescs = new ArrayList<JobDescObject>();
+		String fileName = null;
+			try {
+				fileName = convert.convertTxtToPDF(jobDescFileName);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			JobDescObject jobDescriptions = jobDescParser.parseJobDesc(fileName);
+	}
+	
+	public ArrayList<CVObject> parseCVs(ArrayList<String> cvsFileName) {
+		CVParser cvParser = new CVParser();
+		ConvertPDF convert = new ConvertPDF();
+
+		cvs.clear();
+		for(int i = 0; i < cvsFileName.size(); i++) {
+			String fileName = null;
+			try {
+				fileName = convert.convertTxtToPDF(cvsFileName.get(i));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			cvs.add(cvParser.parseCV(fileName));
+		}
+		return cvs;
+		
+	}
+	
+	public void storeInLanguageHashMap(ArrayList<String> keyword){
+		//Storage storage = new Storage();
+		
+	}
+	
+	public void storeInSkillHashMap(ArrayList<String> keyword){
+		
+	}
+	
+	public void storeInExperienceHashMap(ArrayList<String> keyword){
+		
+	}
+
+	public ArrayList<ArrayList<String>> analyse(JobDescObject jobdesc, ArrayList<CVObject> cvs){
+		Analyser analyser = new Analyser();
+		
+		ArrayList<ArrayList<String>> results = analyser.analyse(jobdesc, cvs);
+		return results;
+		
+	}
+	
+	public boolean matchKeyword(String keyword) {
+		return false;
+		
+	}
+	
+
 
 
 	 
