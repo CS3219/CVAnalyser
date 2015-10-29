@@ -1,9 +1,9 @@
 package com.parser;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Properties;
 
 import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.util.CoreMap;
@@ -28,10 +28,10 @@ public class SectionExtractor {
 
     public ArrayList<Integer> extractSections(ArrayList<String> file, ArrayList<String> KEYWORDS) {
         int i = 0, countSecLines = 0;
-        ArrayList<Integer> sectionIndex = new ArrayList<Integer>();
+        ArrayList<Integer> sectionIndices = new ArrayList<Integer>();
         String head = null;
         
-        sectionIndex.add(i); //name
+        sectionIndices.add(i); //name
         i++;
         
         for (; i < file.size(); i++) {
@@ -42,13 +42,13 @@ public class SectionExtractor {
             } else if (header != head) {
                 if (countSecLines != 0) {
                     countSecLines = 0;
-                    sectionIndex.add(i);
+                    sectionIndices.add(i);
                     //System.out.println("index = "+i);
                 }
             }
         }
         
-        return sectionIndex;
+        return sectionIndices;
     }
     
     
@@ -132,9 +132,9 @@ public class SectionExtractor {
     }
 
     private void printSection() throws ClassCastException, ClassNotFoundException, IOException {
-        /*System.out.println("header: " + head);
+        //System.out.println("header: " + head);
 
-        for (int i = 0; i < section.size(); i++) {
+        /*for (int i = 0; i < section.size(); i++) {
             System.out.println(section.get(i));
         }*/
 
