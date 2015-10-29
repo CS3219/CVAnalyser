@@ -1,8 +1,5 @@
 package com.parser;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
@@ -14,18 +11,52 @@ import edu.stanford.nlp.ling.CoreAnnotations.*;
 public class SectionExtractor {
 
     //private static final String[] KEYWORDS = Arrays.asList("education", "work experience");
-    private static final ArrayList<String> KEYWORDS = new ArrayList<String>
+    private static final ArrayList<String> KEYWORDS_CV = new ArrayList<String>
             (Arrays.asList("education", "skills", "languages", "work experience", "interests", "referees", 
-                "CCA", "extracurricular activities"));
+                "CCA", "extracurricular activities")); 
+    private static final ArrayList<String> KEYWORDS_JOBDESC = new ArrayList<String>
+            (Arrays.asList("minimal requirements")); //to be completed
+    
     private static final String KEYWORD_NAME = "name";
     private static final ArrayList<String> PARAMS = new ArrayList<String>
             (Arrays.asList("NN", "NNS", "NNP", "NNPS", "CD"));
 
-    private ArrayList<String> section = new ArrayList<String>(); 
-    private String head = " "; 
+    //private ArrayList<String> section = new ArrayList<String>(); 
+    //private String head = " "; 
 
+    public ArrayList<Integer> extractSections(ArrayList<String> file, boolean isCV) {
+        int i = 0, countSecLines = 0;
+        ArrayList<Integer> sectionIndex = new ArrayList<Integer>();
+        ArrayList<String> KEYWORDS = new ArrayList<String>();
+        String head = null;
+        
+        sectionIndex.add(i); //name
+        i++;
+        
+        if (isCV) {
+            KEYWORDS = KEYWORDS_CV;
+        } else {
+            KEYWORDS = KEYWORDS_CV;
+        }
+        
+        for (; i < file.size(); i++) {
+            String header = parseSection(file.get(i), KEYWORDS);
 
-    public CVObject extractSections(String filename) throws ClassCastException, ClassNotFoundException {
+            if (header == null) {
+                countSecLines++;
+            } else if (header != head) {
+                if (countSecLines != 0) {
+                    countSecLines = 0;
+                    sectionIndex.add(i);
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    
+    /*public CVObject extractSections(String filename) throws ClassCastException, ClassNotFoundException {
         BufferedReader br = null;
         SectionParser sp = new SectionParser();
 
@@ -72,9 +103,9 @@ public class SectionExtractor {
         }
 
         return sp.getCVObject();
-    }
+    }*/
 
-    private String parseSection(String line) {
+    private String parseSection(String line, ArrayList<String> KEYWORDS) {
         //System.out.println("line = ."+line.trim()+".");
         //System.out.println("size = "+line.length());
         if (containsCaseInsensitive(line, KEYWORDS)) {
@@ -105,13 +136,13 @@ public class SectionExtractor {
     }
 
     private void printSection() throws ClassCastException, ClassNotFoundException, IOException {
-        System.out.println("header: " + head);
+        /*System.out.println("header: " + head);
 
         for (int i = 0; i < section.size(); i++) {
             System.out.println(section.get(i));
-        }
+        }*/
 
-        Properties props = new Properties();
+        /*Properties props = new Properties();
         props.put("annotators", "tokenize, ssplit, pos, lemma");//, ner, parse, dcoref");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
@@ -161,6 +192,6 @@ public class SectionExtractor {
                 System.out.println("line = "+line);
                 section.set(i, line);
             }
-        }
+        }*/
     }
 }
