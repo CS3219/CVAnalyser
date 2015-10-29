@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>CV Analyser</title>
@@ -22,8 +23,8 @@ table {
 	background-color: #ffffff;
 	border: 2px solid black;
 	opacity: 0.6;
-	filter: alpha(opacity = 60); /* For IE8 and earlier */
-}
+	filter: alpha(opacity = 60); 
+	}
 
 td {
 	padding: 10px;
@@ -37,46 +38,37 @@ td {
 			enctype="multipart/form-data">
 			<table>
 				<tr>
-					<td style="border-bottom: 1pt solid black" colspan="2">
+					<td style="border-bottom: 1pt solid black; height: 20px" colspan="2">
 						<h1>CV Analyser:</h1>
 					</td>
 				</tr>
 				<tr>
-					<td style="padding-top: 20px">CV:</td>
-					<td style="padding-top: 20px"><input type="file"
-						name="upload_cv" id="upload_cv" accept="application/pdf" /></td>
+					<td align="center"><font size="2.5"><b>Job Position: </b></font></td>
+					<td><input type="text" name="job_position" style="width: 295px; height: 28px"/></td>
 				</tr>
 				<tr>
-					<td>Job Description:</td>
+					<td align="center"><font size="2.5"><b>Job Description:</b></font></td>
 					<td><input type="file" name="upload_jobdesc"
-						accept="application/pdf" /></td>
-				</tr>
-				
-				<tr>
-					<td colspan="2">Job Description:</td>
+						accept="application/pdf" style="width: 295px; height: 28px"/></td>
 				</tr>
 				<tr>
-					<td>Position:</td>
-					<td> <input type="text" name="position"></td>
+					<td align="center" style="padding-top: 20px"><font size="2.5"><b>CV:</b></font></td>
+					<td style="padding-top: 20px"><input type="file"
+						name="upload_cv" id="upload_cv" accept="application/pdf" style="width: 299px; height: 25px"/></td>
 				</tr>
-				
 				<tr>
-					<td>Educational Requirements:</td>
-					<td> <input type="text" name="eduReq"></td>
+					<td colspan="2"><font size="4"><b>Uploaded CVs: </b></font></td>
 				</tr>
-				
 				<tr>
-					<td>Technical Skills:</td>
-					<td> <input type="text" name="techSkills"></td>
+					<td colspan="2"><TEXTAREA name="cv_uploaded" id="UploadedCVs"  ROWS=15 COLS=50 ></TEXTAREA></td>
 				</tr>
-				
 				<tr>
-					<td style="padding-top: 60px" align="center" colspan="2"><input
-						type="submit" value="Submit"></td>
+					<td align="right" colspan="2"><input type="submit" value="Submit"></td>
 				</tr>
+		
 			</table>
 		</form>
 	</div>
 </body>
-
+<footer></footer>
 </html>
