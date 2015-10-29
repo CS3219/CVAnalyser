@@ -22,4 +22,9 @@ public class CVParser {
         
         //return null;
     }
+    
+    public static void main(String[] args) {
+        CVParser cvp = new CVParser();
+        cvp.parseCV("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\file1.txt");
+    }
 }

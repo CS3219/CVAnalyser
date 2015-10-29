@@ -1,7 +1,9 @@
 package com.parser;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Properties;
 
 import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.util.CoreMap;
@@ -11,11 +13,11 @@ import edu.stanford.nlp.ling.CoreAnnotations.*;
 public class SectionExtractor {
 
     //private static final String[] KEYWORDS = Arrays.asList("education", "work experience");
-    private static final ArrayList<String> KEYWORDS_CV = new ArrayList<String>
+    /*private static final ArrayList<String> KEYWORDS_CV = new ArrayList<String>
             (Arrays.asList("education", "skills", "languages", "work experience", "interests", "referees", 
                 "CCA", "extracurricular activities")); 
     private static final ArrayList<String> KEYWORDS_JOBDESC = new ArrayList<String>
-            (Arrays.asList("minimal requirements")); //to be completed
+            (Arrays.asList("minimal requirements")); //to be completed*/
     
     private static final String KEYWORD_NAME = "name";
     private static final ArrayList<String> PARAMS = new ArrayList<String>
@@ -24,20 +26,13 @@ public class SectionExtractor {
     //private ArrayList<String> section = new ArrayList<String>(); 
     //private String head = " "; 
 
-    public ArrayList<Integer> extractSections(ArrayList<String> file, boolean isCV) {
+    public ArrayList<Integer> extractSections(ArrayList<String> file, ArrayList<String> KEYWORDS) {
         int i = 0, countSecLines = 0;
-        ArrayList<Integer> sectionIndex = new ArrayList<Integer>();
-        ArrayList<String> KEYWORDS = new ArrayList<String>();
+        ArrayList<Integer> sectionIndices = new ArrayList<Integer>();
         String head = null;
         
-        sectionIndex.add(i); //name
+        sectionIndices.add(i); //name
         i++;
-        
-        if (isCV) {
-            KEYWORDS = KEYWORDS_CV;
-        } else {
-            KEYWORDS = KEYWORDS_CV;
-        }
         
         for (; i < file.size(); i++) {
             String header = parseSection(file.get(i), KEYWORDS);
@@ -47,12 +42,13 @@ public class SectionExtractor {
             } else if (header != head) {
                 if (countSecLines != 0) {
                     countSecLines = 0;
-                    sectionIndex.add(i);
+                    sectionIndices.add(i);
+                    //System.out.println("index = "+i);
                 }
             }
         }
         
-        return null;
+        return sectionIndices;
     }
     
     
@@ -136,9 +132,9 @@ public class SectionExtractor {
     }
 
     private void printSection() throws ClassCastException, ClassNotFoundException, IOException {
-        /*System.out.println("header: " + head);
+        //System.out.println("header: " + head);
 
-        for (int i = 0; i < section.size(); i++) {
+        /*for (int i = 0; i < section.size(); i++) {
             System.out.println(section.get(i));
         }*/
 
