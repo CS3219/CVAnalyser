@@ -1,28 +1,23 @@
 package com.parser;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PreProcessor {
 
-    public void preprocess(String filename) {
+    public ArrayList<String> preprocess(String filename) {
         BufferedReader br = null;
-        BufferedWriter bw = null;
-
+        //BufferedWriter bw = null;
+        ArrayList<String> lines = new ArrayList<String>();
+        
         try {
             br = new BufferedReader(new FileReader(new File(filename)));
-
-
             String curLine = null;
-            List<String> lines = new ArrayList<String>();
-
+          
             //name shouldn't become small letters
             while ((curLine = br.readLine()) != null) {
                 if (curLine.length() > 1) {
@@ -43,23 +38,26 @@ public class PreProcessor {
 
             br.close();
 
-            bw = new BufferedWriter(new FileWriter(new File(filename)));
+            /*bw = new BufferedWriter(new FileWriter(new File(filename)));
 
             for(String s : lines)
                 bw.write(s);
 
             bw.flush();
             bw.close();
-            bw.close();
+            bw.close();*/
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
+        return lines;
     }
 
     private String process(String line) {
         line = line.trim().replaceAll(" +", " ");
         line = line.replaceAll("\t", "");
+        line = line.replaceAll("[^\\x00-\\x7F]", "");
         line = line.toLowerCase();
         line = line + "\n";
 
