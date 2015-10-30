@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CV Analyser</title>
+<style type="text/css">
+body {
+	background-image: url("bg-image.jpg");
+	background-color: #000000;
+}
+
+#header, #footer {
+	font-size: large;
+	padding: 0.3em;
+	background: #000000;
+}
+
+table {
+	margin: 120px;
+	padding-top: 2px;
+	padding-bottom: 120px;
+	padding-right: 40px;
+	padding-left: 40px;
+	background-color: #ffffff;
+	border: 2px solid black;
+	opacity: 0.6;
+	filter: alpha(opacity = 60); 
+	}
+
+td {
+	padding: 10px;
+}
+</style>
+</head>
+
+<body>
+	<div align="center">
+		<form action="uploadFile.php" method="post"
+			enctype="multipart/form-data">
+			<table style="height: 564px; ">
+				<tr>
+					<td style="border-bottom: 1pt solid black; height: 20px" colspan="2">
+						<h1>Results:</h1>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="width: 350px; height: 136px; "><textarea style="width: 486px; height: 327px; "></textarea></td>
+				</tr>
+				<tr><td align="center" colspan="2"><input type="reset" value="Submit New Description"></td></tr>
+			</table>
+		</form>
+	</div>
+</body>
+<footer></footer>
+</html>

@@ -79,7 +79,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		
 	}
 	
-	public void storeInLanguageHashMap(ArrayList<String> keyword){
+	/*public void storeInLanguageHashMap(ArrayList<String> keyword){
 		try {
 			Storage storage = new Storage();
 		} catch (IOException e) {
@@ -95,7 +95,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 	
 	public void storeInExperienceHashMap(ArrayList<String> keyword){
 		
-	}
+	}*/
 
 	public ArrayList<ArrayList<String>> analyse(JobDescObject jobdesc, ArrayList<CVObject> cvs){
 		Analyser analyser = new Analyser();
