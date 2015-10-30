@@ -6,6 +6,9 @@ public class WorkExpObject {
     private double duration;
     private ArrayList<String> desc;
     
+    public WorkExpObject() {
+    }
+    
     public WorkExpObject(double duration, ArrayList<String> desc) {
         this.duration = duration;
         this.desc = desc;
@@ -19,11 +22,11 @@ public class WorkExpObject {
         return this.desc;
     }
     
-    public void setDuration(int duration) {
+    public void setDuration(double duration) {
         this.duration = duration;
     }
     
-    public void setArea(ArrayList<String> desc) {
+    public void setDesc(ArrayList<String> desc) {
         this.desc = desc;
     }
 }
