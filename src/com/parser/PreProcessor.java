@@ -57,7 +57,9 @@ public class PreProcessor {
     private String process(String line) {
         line = line.trim().replaceAll(" +", " ");
         line = line.replaceAll("\t", "");
+        //System.out.println("before"+line);
         line = line.replaceAll("[^\\x00-\\x7F]", "");
+        //System.out.println("after"+line);
         line = line.toLowerCase();
         line = line + "\n";
 

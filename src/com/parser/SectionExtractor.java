@@ -26,12 +26,12 @@ public class SectionExtractor {
     //private ArrayList<String> section = new ArrayList<String>(); 
     //private String head = " "; 
 
-    public ArrayList<Integer> extractSections(ArrayList<String> file, ArrayList<String> KEYWORDS) {
+    public ArrayList<SectionHeader> extractSections(ArrayList<String> file, ArrayList<String> KEYWORDS) {
         int i = 0, countSecLines = 0;
-        ArrayList<Integer> sectionIndices = new ArrayList<Integer>();
-        String head = null;
+        ArrayList<SectionHeader> sectionIndices = new ArrayList<SectionHeader>();
+        //String head = null;
         
-        sectionIndices.add(i); //name
+        sectionIndices.add(new SectionHeader(i, KEYWORD_NAME)); //name
         i++;
         
         for (; i < file.size(); i++) {
@@ -39,10 +39,10 @@ public class SectionExtractor {
 
             if (header == null) {
                 countSecLines++;
-            } else if (header != head) {
+            } else {
                 if (countSecLines != 0) {
                     countSecLines = 0;
-                    sectionIndices.add(i);
+                    sectionIndices.add(new SectionHeader(i, header));
                     //System.out.println("index = "+i);
                 }
             }
@@ -101,13 +101,13 @@ public class SectionExtractor {
         return sp.getCVObject();
     }*/
 
-    private String parseSection(String line, ArrayList<String> KEYWORDS) {
+    /*private String parseSection(String line, ArrayList<String> KEYWORDS) {
         //System.out.println("line = ."+line.trim()+".");
         //System.out.println("size = "+line.length());
-        if (containsCaseInsensitive(line, KEYWORDS)) {
+        String checkedLine;
+        if ((checkedLine = containsCaseInsensitive(line, KEYWORDS)) != null) {
             //System.out.println("yes line = ."+line.trim()+".");
-            
-            return line;
+            return checkedLine;
         }
         
         /*StringTokenizer tokenizer = new StringTokenizer(line);
@@ -119,16 +119,16 @@ public class SectionExtractor {
                 return firstWord;
             }
         }*/
-        return null;
-    }
+        //return null;
+    //}
 
-    private boolean containsCaseInsensitive(String strToCompare, ArrayList<String>list) {
+    private String parseSection(String strToCompare, ArrayList<String>list) {
         for(String str:list) {
             if(str.toLowerCase().contains(strToCompare) || strToCompare.toLowerCase().contains(str)) {
-                return true;
+                return str;
             }
         }
-        return false;
+        return null;
     }
 
     private void printSection() throws ClassCastException, ClassNotFoundException, IOException {
