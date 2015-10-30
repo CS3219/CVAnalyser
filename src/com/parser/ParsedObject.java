@@ -2,12 +2,12 @@ package com.parser;
 
 import java.util.ArrayList;
 
-public class parsedObject {
+public class ParsedObject {
 
 	private String type;
 	private ArrayList<String> words;
 	
-	public parsedObject() {
+	public ParsedObject() {
 		words = new ArrayList<String>();
 	}
 	
