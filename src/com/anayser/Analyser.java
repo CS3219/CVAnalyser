@@ -15,7 +15,7 @@ public class Analyser {
 		
 	}
 	
-	public ArrayList<ArrayList<String>> analyse(JobDescObject jobDesc, ArrayList<CVObject> cvs){
+	public ArrayList<ArrayList<String>> analyse(JobDescObject jobDesc, ArrayList<CVObject> cvs, String position){
 		ArrayList<String> cvSkill, cvEducation, cvLanguage, cvCertification;
 		ArrayList<ExpObject> cvExp, cvProj, cvPublication;
 		ArrayList<ParsedObject> minSkillReq = jobDesc.getMinSkills();
@@ -44,8 +44,8 @@ public class Analyser {
 			
 			minEduScore = compareEdu(minEduReq, cvEducation);
 			
-			minExpScore = compareExp(minWorkExp, cvExp, cvProj, cvPublication, jobDesc.getPosition());
-			extraExpScore = compareExp(extraWorkExp, cvExp, cvProj, cvPublication, jobDesc.getPosition());
+			minExpScore = compareExp(minWorkExp, cvExp, cvProj, cvPublication, position);
+			extraExpScore = compareExp(extraWorkExp, cvExp, cvProj, cvPublication, position);
 			
 			if(minEduScore == -1 && minSkillScore > 0.5){
 				minEduScore = 1;

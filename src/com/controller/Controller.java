@@ -15,7 +15,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 	public Controller(){
 		
 	}
-	
+	/*
 	public ArrayList<ArrayList<String>> processJobDescAndCV(String position,String eduReq,String techSkills, ArrayList<String> CV){
 		CVParser cvParser = new CVParser();
 		JobDescParser jobDescParser = new JobDescParser();
@@ -37,14 +37,14 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		JobDescObject jobDescriptions = jobDescParser.parseJobDesc(position,eduReq,techSkills);
 		ArrayList<ArrayList<String>> results = analyser.analyse(jobDescriptions, cvs);
 		
-		/*	System.out.println("Technical: " +techSkills);
+		System.out.println("Technical: " +techSkills);
 		System.out.println("Position: " + position);
 		System.out.println("Education: "+eduReq);
-		System.out.println("Technical: " +techSkills);*/
+		System.out.println("Technical: " +techSkills);
 		
 		return results;
 	}
-	
+*/	
 	public JobDescObject parseJobDesc(String jobDescFileName){
 		JobDescParser jobDescParser = new JobDescParser();
 		ConvertPDF convert = new ConvertPDF();
@@ -98,10 +98,10 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		
 	}*/
 
-	public ArrayList<ArrayList<String>> analyse(JobDescObject jobdesc, ArrayList<CVObject> cvs){
+	public ArrayList<ArrayList<String>> analyse(JobDescObject jobdesc, ArrayList<CVObject> cvs, String position){
 		Analyser analyser = new Analyser();
 		
-		ArrayList<ArrayList<String>> results = analyser.analyse(jobdesc, cvs);
+		ArrayList<ArrayList<String>> results = analyser.analyse(jobdesc, cvs, position);
 		return results;
 		
 	}
