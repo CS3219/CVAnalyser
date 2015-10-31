@@ -25,7 +25,7 @@ class JobDescParser {
 	private static ArrayList<ParsedObject> minWorkExp = new ArrayList<ParsedObject>();
 	private static ArrayList<ParsedObject> bonusSkills = new ArrayList<ParsedObject>();
 	private static ArrayList<ParsedObject> bonusWorkExp = new ArrayList<ParsedObject>();
-	private static ArrayList<ParsedObject> minEdu = new ArrayList<ParsedObject>();
+	private static ArrayList<ParsedObject> responsibilities = new ArrayList<ParsedObject>();
 	
 	public JobDescParser() {
 		Headers.add(0, "responsibilities");
@@ -41,7 +41,7 @@ class JobDescParser {
 				lines.add(0, null);
 				SectionExtractor Se = new SectionExtractor();
 				ArrayList<SectionHeader>sections = Se.extractSections(lines, Headers);
-				ArrayList<String> responsibilities, minReq, bonusQualifications, updatedLines;
+				ArrayList<String> responsibilitiesSection, minReq, bonusQualifications, updatedLines;
 				
 				for(int i=1; i<sections.size(); i++) {
 					SectionHeader section = sections.get(i);
@@ -50,12 +50,12 @@ class JobDescParser {
 					if(section.getHeader().equalsIgnoreCase("responsibilities")) {
 						if(i!=(sections.size()-1)) {
 						nextLineNum = sections.get(i+1).getLineNum();
-						 responsibilities = (ArrayList<String>) lines.subList(lineNum,nextLineNum -1);
+						 responsibilitiesSection = (ArrayList<String>) lines.subList(lineNum,nextLineNum -1);
 						} else {
-							 responsibilities = (ArrayList<String>) lines.subList(lineNum,lines.size()-1);
+							 responsibilitiesSection = (ArrayList<String>) lines.subList(lineNum,lines.size()-1);
 						}
-						updatedLines = parseNlp(responsibilities);
-						 parseResponsibilities(updatedLines);
+						updatedLines = parseNlp(responsibilitiesSection);
+						 parseLines(updatedLines, section.getHeader());
 					} else if(section.getHeader().equalsIgnoreCase("minimum requirements")) {
 						if(i!=(sections.size()-1)) {
 							nextLineNum = sections.get(i+1).getLineNum();
@@ -64,7 +64,7 @@ class JobDescParser {
 								 minReq = (ArrayList<String>) lines.subList(lineNum,lines.size()-1);
 							}
 						updatedLines = parseNlp(minReq);
-						parseMinReq(updatedLines);
+						parseLines(updatedLines, section.getHeader());
 					} else {
 						if(i!=(sections.size()-1)) {
 							nextLineNum = sections.get(i+1).getLineNum();
@@ -73,109 +73,120 @@ class JobDescParser {
 								 bonusQualifications = (ArrayList<String>) lines.subList(lineNum,lines.size()-1);
 							}
 						updatedLines = parseNlp(bonusQualifications);
-						parseBonus(updatedLines);
+						parseLines(updatedLines, section.getHeader());
 					}
 				}
-				
+		jobDescObject.setMinEdu(minEdu);
+		jobDescObject.setMinSkills(minSkills);
+		jobDescObject.setMinWorkExp(minWorkExp);
+		jobDescObject.setBonusSkills(bonusSkills);
+		jobDescObject.setBonusWorkExp(bonusWorkExp);
+		jobDescObject.setResponsibilities(responsibilities);
 		return jobDescObject;
 	}
 	
-	private void parseResponsibilities(ArrayList<String> responsibilities) {
-		
-	
-	}
-	
-	private void parseMinReq(ArrayList<String> minReq) {
-		ArrayList<String> words = new ArrayList<String>();
-		
-		for(int i=0;i<minReq.size();i++) {
-			String line = minReq.get(i);
+	private void parseLines(ArrayList<String> lines, String category) {
+		for(int i=0;i<lines.size();i++) {
+			String line = lines.get(i);
 			ParsedObject parsed = new ParsedObject();
-			Pattern pattern = Pattern.compile(".*\\bbachelor|masters|phd|diploma\\b.*");
-			Matcher matcher = pattern.matcher(line);
+			ArrayList<String> words = new ArrayList<String>();
 			
+			Pattern patternEdu = Pattern.compile(".*\\bbachelor|masters|phd|diploma\\b.*");
+			Matcher matcherEdu = patternEdu.matcher(line);
+	
+			Pattern patternWorkExp = Pattern.compile(".*\\d+.*");
+			Matcher matcherWorkExp = patternWorkExp.matcher(line);
+	
 			//education line
-			if(matcher.find()) {
-				int index = matcher.start();
+			if(matcherEdu.find()) {
+				int index = matcherEdu.start();
 				line = line.substring(index);
-				if(line.contains(",")) {
-					if((line.matches(".*\\bor|and\\b.*"))) {
-						if(line.matches(".*\\bor\\b.*")) {
-							parsed.setType("or");
-							} else {
-								parsed.setType("and");
-							}
-						String tokens[] = line.split(",");
-						for(int j=0;j<tokens.length;j++) {
-							if(j!=tokens.length-1) {
-								words.add(j, tokens[j]);
-							} else {
-								String end[] = tokens[j].split(" ");
-								words.add(end[0]);
-								words.add(end[1]);
-							}
-						}
-					} else {
-						String[] tokens = line.split(",");
-						for(int j=0;j<tokens.length;j++) {
-							words.add(tokens[j]);
-						}
-					}
-				} else {
-					words.add(line);
-				}
-				//work exp
-			} else if() {
-				
-				
-				
-				
+				parseEducation(line,parsed, words);
+			//work exp
+			} else if(matcherWorkExp.find()) {
+				int index = matcherWorkExp.start();
+				line = line.substring(index);
+				parseWorkExp(line,parsed, words,category);
 			//skills	
 			} else {
-			
-			if((line.matches(".*\\bor|and\\b.*"))) {
-				if(line.matches(".*\\bor\\b.*")) {
-				parsed.setType("or");
+				if(category.equalsIgnoreCase("responsibilities")) {
+					parseResponsibilities(line,parsed,words);
 				} else {
-					parsed.setType("and");
+			parseMinBonusSkills(line,parsed, words,category);
 				}
-				if(line.contains(",")){
-				String tokens[] = line.split(",");
-				for(int j=0;j<tokens.length;j++) {
-					if(j!=tokens.length-1) {
-						words.add(j, tokens[j]);
-					} else {
-						String end[] = tokens[j].split(" ");
-						words.add(end[0]);
-						words.add(end[1]);
-					}
-				}
-				} else {
-				String[] tokens = line.split(" ");	
-				words.add(tokens[0]);
-				words.add(tokens[2]);
-				}
-			} else {
-				parsed.setType("none");
-				if(line.contains(",")) {
-				String tokens[] = line.split(",");
-				for(int j=0;j<tokens.length;j++) {
-						words.add(j, tokens[j]);	
-				}
-			} else {
-				words.add(0,line);
-			}
-			}
-			parsed.setWords(words);
-			words.clear();
 			}
 		}
 			
 	}
 	
-
-	private void parseBonus(ArrayList<String> bonus) {
-		//	if(tokens[j].matches(".*\\d+.*")) {
+	private void parseMinBonusSkills(String line, ParsedObject parsed, ArrayList<String> words, String category) {
+		ParsedObject parsedSkills = parseSkills(line, parsed,words);
+		if(category.equalsIgnoreCase(Headers.get(1))) {
+		minSkills.add(parsedSkills);
+		} else {
+			bonusSkills.add(parsedSkills);
+		}
+	}
+	
+	private void parseWorkExp(String line, ParsedObject parsed, ArrayList<String> words, String category) {
+		int indexExp = line.indexOf("experience");
+		String duration = line.substring(0, indexExp-1);
+		words.add(duration.trim());
+		line = line.substring(indexExp+"experience".length());
+		ParsedObject parsedWorkExp = parseSkills(line.trim(),parsed,words);
+		if(category.equalsIgnoreCase(Headers.get(1))) {
+		minWorkExp.add(parsedWorkExp);
+		} else {
+			bonusWorkExp.add(parsedWorkExp);
+		}
+	}
+	
+	private void parseEducation(String line, ParsedObject parsed, ArrayList<String> words) {
+		ParsedObject parsedEdu = parseSkills(line,parsed,words);
+		minEdu.add(parsedEdu);
+	}
+	
+	private ParsedObject parseSkills(String line, ParsedObject parsed, ArrayList<String> words) {
+		if((line.matches(".*\\b(or|and)\\b.*"))) {
+			if(line.matches(".*\\bor\\b.*")) {
+			parsed.setType("or");
+			} else {
+				parsed.setType("and");
+			}
+			if(line.contains(",")){
+			String tokens[] = line.split(",");
+			for(int j=0;j<tokens.length;j++) {
+				if(j!=tokens.length-1) {
+					words.add(j, tokens[j].trim());
+				} else {
+					String end[] = tokens[j].trim().split(" ");
+					words.add(end[0].trim());
+					words.add(end[2].trim());
+				}
+			}
+			} else {
+			String[] tokens = line.split(" ");	
+			words.add(tokens[0].trim());
+			words.add(tokens[2].trim());
+			}
+		} else {
+			parsed.setType("none");
+			if(line.contains(",")) {
+			String tokens[] = line.split(",");
+			for(int j=0;j<tokens.length;j++) {
+					words.add(j, tokens[j].trim());	
+			}
+		} else {
+			words.add(0,line.trim());
+		}
+		}
+		parsed.setWords(words);
+		return parsed;
+	}
+	
+	private void parseResponsibilities(String line, ParsedObject parsed, ArrayList<String> words) {
+		ParsedObject parsedResponsibilities = parseSkills(line,parsed,words);
+		responsibilities.add(parsedResponsibilities);
 	}
 	
 	private static ArrayList<String> parseNlp(ArrayList<String> lines) {

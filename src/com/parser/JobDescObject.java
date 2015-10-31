@@ -4,74 +4,65 @@ import java.util.ArrayList;
 
 public class JobDescObject {
 
-	private ArrayList<String> responsibilities;
-	private ArrayList<String>minSkills;
+	private ArrayList<ParsedObject> responsibilities;
+	private ArrayList<ParsedObject>minSkills;
 	//private String residentialStatus;
-	private ArrayList<String> minEdu;
-	private ArrayList<workExp> minWorkExp;
-	private ArrayList<String>bonusSkills;
-	private ArrayList<String>bonusEdu;
-	private ArrayList<workExp>bonusWorkExp;
+	private ArrayList<ParsedObject> minEdu;
+	private ArrayList<ParsedObject> minWorkExp;
+	private ArrayList<ParsedObject>bonusSkills;
+	private ArrayList<ParsedObject>bonusWorkExp;
 
 	public JobDescObject() {
 
 	}
 
-	public ArrayList<String> getResponsibilites() {
+	public ArrayList<ParsedObject> getResponsibilities() {
 		return responsibilities;
 	}
 
-	public ArrayList<String> getMinSkills() {
+	public ArrayList<ParsedObject> getMinSkills() {
 
 		return minSkills;
 	}
 	
-	public ArrayList<String> getMinEdu() {
+	public ArrayList<ParsedObject> getMinEdu() {
 		return minEdu;
 	}
 	
-	public ArrayList<workExp> getMinWorkExp() {
+	public ArrayList<ParsedObject> getMinWorkExp() {
 		return minWorkExp;
 	}
 
-	public ArrayList<String> getBonusSkills() {
+	public ArrayList<ParsedObject> getBonusSkills() {
 		return bonusSkills;
 	}
 	
-	public ArrayList<String> getBonusEdu() {
-		return bonusEdu;
-	}
-	
-	public ArrayList<workExp> getBonusWorkExp() {
+	public ArrayList<ParsedObject> getBonusWorkExp() {
 	return bonusWorkExp;	
 		
 	}
 	
-	public void  setResponsibilites(ArrayList<String> responsibilities) {
+	public void  setResponsibilities(ArrayList<ParsedObject> responsibilities) {
 		this.responsibilities = responsibilities;
 	}
 
-	public void setMinSkills(ArrayList<String> minSkills) {
+	public void setMinSkills(ArrayList<ParsedObject> minSkills) {
 		this.minSkills = minSkills;
 	}
 	
-	public void setMinEdu(ArrayList<String> minEdu) {
+	public void setMinEdu(ArrayList<ParsedObject> minEdu) {
 		this.minEdu = minEdu;
 	}
 	
-	public void setMinWorkExp(ArrayList<workExp> minWorkExp) {
+	public void setMinWorkExp(ArrayList<ParsedObject> minWorkExp) {
 		this.minWorkExp = minWorkExp;
 	}
 	
-	public void setBonusSkills(ArrayList<String> bonusSkills) {
+	public void setBonusSkills(ArrayList<ParsedObject> bonusSkills) {
 		this.bonusSkills = bonusSkills;
 	}
 	
-	public void setBonusEdu(ArrayList<String> bonusEdu) {
-		this.bonusEdu = bonusEdu;
-	}
-	
-	public void setBonusWorkExp(ArrayList<workExp> bonusWorkExp) {
+	public void setBonusWorkExp(ArrayList<ParsedObject> bonusWorkExp) {
 		this.bonusWorkExp = bonusWorkExp;
 	}
 	
