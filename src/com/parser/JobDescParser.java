@@ -169,9 +169,23 @@ class JobDescParser {
 				}
 			}
 			} else {
-			String[] tokens = line.split(" ");	
-			words.add(tokens[0].trim());
-			words.add(tokens[2].trim());
+				if(line.matches(".*\\bor\\b.*")) {
+					int index =line.indexOf(" or ");
+					String first = line.substring(0, index);
+					words.add(first.trim());
+					String second = line.substring(index);
+					second = second.replace("or", " ");
+					words.add(second.trim());
+				} else {
+					if(line.matches(".*\\band\\b.*")) {
+						int index =line.indexOf(" and ");
+						String first = line.substring(0, index);
+						words.add(first.trim());
+						String second = line.substring(index);
+						second = second.replace("and", " ");
+						words.add(second.trim());
+					}
+					}
 			}
 		} else {
 			parsed.setType("none");
