@@ -15,7 +15,7 @@ import edu.stanford.nlp.util.CoreMap;
 import edu.stanford.nlp.ling.*; 
 import edu.stanford.nlp.ling.CoreAnnotations.*; 
 
-class JobDescParser {
+public class JobDescParser {
 
 	private static final ArrayList<String> Headers = new ArrayList<String>();
 	private static JobDescObject jobDescObject = new JobDescObject();

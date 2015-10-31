@@ -58,6 +58,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 			}
 		
 			JobDescObject jobDescriptions = jobDescParser.parseJobDesc(fileName);
+			return jobDescriptions;
 	}
 	
 	public ArrayList<CVObject> parseCVs(ArrayList<String> cvsFileName) {
@@ -105,10 +106,10 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		
 	}
 	
-	public boolean matchKeyword(String keyword) {
-		return false;
+//	public boolean matchKeyword(String keyword) {
+	//	return false;
 		
-	}
+//	}
 	
 
 
