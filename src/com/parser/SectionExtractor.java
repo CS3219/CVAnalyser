@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.util.CoreMap;
@@ -20,8 +21,8 @@ public class SectionExtractor {
             (Arrays.asList("minimal requirements")); //to be completed*/
     
     private static final String KEYWORD_NAME = "name";
-    private static final ArrayList<String> PARAMS = new ArrayList<String>
-            (Arrays.asList("NN", "NNS", "NNP", "NNPS", "CD"));
+    /*private static final ArrayList<String> PARAMS = new ArrayList<String>
+            (Arrays.asList("NN", "NNS", "NNP", "NNPS", "CD"));*/
 
     //private ArrayList<String> section = new ArrayList<String>(); 
     //private String head = " "; 
@@ -44,6 +45,7 @@ public class SectionExtractor {
                     countSecLines = 0;
                     sectionIndices.add(new SectionHeader(i, header));
                     //System.out.println("index = "+i);
+                    //System.out.println("header="+header);
                 }
             }
         }
@@ -125,7 +127,11 @@ public class SectionExtractor {
     private String parseSection(String strToCompare, ArrayList<String>list) {
         for(String str:list) {
             if(str.toLowerCase().contains(strToCompare) || strToCompare.toLowerCase().contains(str)) {
-                return str;
+                StringTokenizer tokens = new StringTokenizer(strToCompare);
+                if (tokens.countTokens() < 5) {
+                    //System.out.println("str = "+str);
+                    return str;
+                }
             }
         }
         return null;
