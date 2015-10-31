@@ -7,11 +7,8 @@ public class ExpObject {
     private ArrayList<String> desc;
     
     public ExpObject() {
-    }
-    
-    public ExpObject(double duration, ArrayList<String> desc) {
-        this.duration = duration;
-        this.desc = desc;
+        desc = new ArrayList<String>();
+        duration = 0;
     }
     
     public double getDuration() {
