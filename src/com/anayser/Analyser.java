@@ -17,7 +17,7 @@ public class Analyser {
 	
 	public ArrayList<ArrayList<String>> analyse(JobDescObject jobDesc, ArrayList<CVObject> cvs){
 		ArrayList<String> cvSkill, cvEducation, cvLanguage;
-		ArrayList<WorkExpObject> cvExp, cvProj, cvPublication;
+		ArrayList<ExpObject> cvExp, cvProj, cvPublication;
 		ArrayList<String> minSkillReq = jobDesc.getMinSkills();
 		ArrayList<String> extraSkillReq = jobDesc.getExtraSkills();
 		ArrayList<String> minEduReq = jobDesc.getMinEdu();
@@ -99,7 +99,7 @@ public class Analyser {
 	}
 
 	//exp score --> higher exp higher score.
-	private double compareExp(ArrayList<WorkExpObject> workExp, ArrayList<WorkExpObject> cvExp, ArrayList<WorkExpObject> cvProj, ArrayList<WorkExpObject> cvPublication, String position) {
+	private double compareExp(ArrayList<ExpObject> workExp, ArrayList<ExpObject> cvExp, ArrayList<ExpObject> cvProj, ArrayList<ExpObject> cvPublication, String position) {
 		double expNum = 0.0, expScore = 0.0;
 		
 		cvExp.addAll(cvProj);
