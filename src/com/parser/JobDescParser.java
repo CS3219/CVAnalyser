@@ -161,7 +161,11 @@ class JobDescParser {
 				} else {
 					String end[] = tokens[j].trim().split(" ");
 					words.add(end[0].trim());
-					words.add(end[2].trim());
+					String last = "";
+					for(int i=2;i<end.length;i++) {
+					last = last + " " + end[i].trim();
+					}
+					words.add(last.trim());
 				}
 			}
 			} else {
