@@ -2,16 +2,13 @@ package com.parser;
 
 import java.util.ArrayList;
 
-public class WorkExpObject {
+public class ExpObject {
     private double duration;
     private ArrayList<String> desc;
     
-    public WorkExpObject() {
-    }
-    
-    public WorkExpObject(double duration, ArrayList<String> desc) {
-        this.duration = duration;
-        this.desc = desc;
+    public ExpObject() {
+        desc = new ArrayList<String>();
+        duration = 0;
     }
     
     public double getDuration() {

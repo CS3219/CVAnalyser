@@ -5,18 +5,24 @@ import java.util.ArrayList;
 public class CVObject {
 	private String name;
 	private ArrayList<String> education;
-	private ArrayList<WorkExpObject> workExp;
+	private ArrayList<ExpObject> workExp;
+	private ArrayList<ExpObject> publications;
+	private ArrayList<ExpObject> projects;
 	private ArrayList<String> skills;
 	private ArrayList<String> languages;
 	private boolean hasReferences;
+	private boolean hasVolunteerExp;
 	
 	public CVObject() {
 		name = null;
 		education = new ArrayList<String>();
-		workExp = new ArrayList<WorkExpObject>();
+		workExp = new ArrayList<ExpObject>();
+		publications = new ArrayList<ExpObject>();
+		projects = new ArrayList<ExpObject>();
 		skills = new ArrayList<String>();
 		languages = null;
 		hasReferences = false;
+		hasVolunteerExp = false;
 	}
 	
 	public void setName(String name) {
@@ -27,9 +33,17 @@ public class CVObject {
 		this.education = education;
 	}
 	
-	public void setWorkExp(ArrayList<WorkExpObject> workExp) {
+	public void setWorkExp(ArrayList<ExpObject> workExp) {
 	    this.workExp.addAll(workExp);
 	}
+	
+	public void setPublications(ArrayList<ExpObject> publications) {
+        this.publications.addAll(publications);
+    }
+	
+	public void setProjects(ArrayList<ExpObject> projects) {
+        this.projects.addAll(projects);
+    }
 	   
 	public void setSkills(ArrayList<String> skills) {
 		this.skills.addAll(skills);
@@ -43,6 +57,10 @@ public class CVObject {
         hasReferences = true;
     }
 	
+	public void setHasVolnteerExp() {
+	    hasVolunteerExp = true;
+    }
+	
 	public String getName() {
 		return name;
 	}
@@ -51,8 +69,16 @@ public class CVObject {
 		return education;
 	}
 	
-	public ArrayList<WorkExpObject> getWorkExp() {
+	public ArrayList<ExpObject> getWorkExp() {
         return this.workExp;
+    }
+	
+	public ArrayList<ExpObject> getPublications() {
+        return this.publications;
+    }
+	
+	public ArrayList<ExpObject> getProjects() {
+        return this.projects;
     }
 	
 	public ArrayList<String> getSkills() {
@@ -65,6 +91,10 @@ public class CVObject {
 	
 	public boolean gethasReferences() {
         return hasReferences;
+    }
+	
+	public boolean gethasVolunteerExp() {
+        return hasVolunteerExp;
     }
 	
 }
