@@ -5,13 +5,19 @@ import java.util.ArrayList;
 public class CVObject {
 	private String name;
 	private ArrayList<String> education;
-	private ArrayList<WorkExpObject> workExp = new ArrayList<WorkExpObject>();
-	private ArrayList<String> skills = new ArrayList<String>();
+	private ArrayList<WorkExpObject> workExp;
+	private ArrayList<String> skills;
 	private ArrayList<String> languages;
+	private boolean hasReferences;
 	
-	/*public CVObject() {
-		
-	}*/
+	public CVObject() {
+		name = null;
+		education = new ArrayList<String>();
+		workExp = new ArrayList<WorkExpObject>();
+		skills = new ArrayList<String>();
+		languages = null;
+		hasReferences = false;
+	}
 	
 	public void setName(String name) {
 		this.name = name; 
@@ -33,6 +39,10 @@ public class CVObject {
         this.languages = languages;
     }
 	
+	public void setHasReferences() {
+        hasReferences = true;
+    }
+	
 	public String getName() {
 		return name;
 	}
@@ -51,6 +61,10 @@ public class CVObject {
 	
 	public ArrayList<String> getLanguages() {
         return this.languages;
+    }
+	
+	public boolean gethasReferences() {
+        return hasReferences;
     }
 	
 }

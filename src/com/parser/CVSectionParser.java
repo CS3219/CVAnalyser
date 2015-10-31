@@ -18,7 +18,7 @@ public class CVSectionParser {
 
     private static final ArrayList<String> KEYWORDS = new ArrayList<String>
     (Arrays.asList("education", "work experience", "skills", "languages", "interests", 
-            "referees", "CCA", "extracurricular activities")); 
+            "refere", "CCA", "extracurricular activities", "volunteer")); 
     private ArrayList<String> CV;
 
     public CVObject parseCV(ArrayList<String> cv) {
@@ -28,10 +28,10 @@ public class CVSectionParser {
 
         sectionIndices = se.extractSections(CV, KEYWORDS);
 
-        /*for (int i = 0; i < sectionIndices.size(); i++) {
+        for (int i = 0; i < sectionIndices.size(); i++) {
             System.out.println("index = "+sectionIndices.get(i).getLineNum());
             System.out.println("header = "+sectionIndices.get(i).getHeader());
-        }*/
+        }
 
         CVObject cvobj = new CVObject();
         cvobj.setName(CV.get(sectionIndices.get(0).getLineNum()));
@@ -80,14 +80,32 @@ public class CVSectionParser {
                         //String ne = token.get(NamedEntityTagAnnotation.class); 
                         //System.out.println(word+" "+pos);
 
-                        if (PARAMS.contains(pos) || word.equals("-") || word.equals("to")) {
-                            line += word + " ";
+                       if (header == KEYWORDS.get(1)) {
+                            if (PARAMS.contains(pos) || word.equals("-") || word.equals("to")) {
+                                line += word + " ";
+                            }
+                        } else if (header == KEYWORDS.get(2)) {
+                            if (PARAMS.contains(pos)) {// || word.equals(",") || word.equals("to")) {
+                                line += word + " ";
+                            } else if (word.equals(",") || word.equals("and")) {
+                                parsedSection.add(line);
+                                line = "";
+                            }
+                        } else {
+                            if (PARAMS.contains(pos)) {
+                                line += word + " ";
+                            }
                         }
+                        
+                        
                     }
                 }
 
                 //System.out.println("line = "+line);
-                parsedSection.add(line);
+                if (line.length() > 1) {
+                    parsedSection.add(line);
+                }
+                
             }
 
             if (header == KEYWORDS.get(0)) {
@@ -98,13 +116,14 @@ public class CVSectionParser {
                 ArrayList<String> job = new ArrayList<String>();
                 
                 Parser parser = new Parser();
-                
+                int count = 0;
                 for (int k = 0; k < parsedSection.size(); k++) {
                     String line = parsedSection.get(k);
-                    System.out.println(line);
+                    //System.out.println(line);
                     List<DateGroup> groups = parser.parse(line);
 
                     if (groups.size() > 0) {
+                        count++;
                         DateGroup dateGroup = groups.get(0);
                         List<Date> dates = dateGroup.getDates();
                         
@@ -117,20 +136,17 @@ public class CVSectionParser {
                         Date end = new Date();
                         if (dates.size() == 2) {
                             end = dates.get(1);
-                        } else if (dates.size() == 1) {
-                            if (line.contains("present")){
-                                end = new Date();
-                            }
-                        }
+                        } 
                         
                         Calendar cal2 = Calendar.getInstance();
                         cal2.setTime(end);
                         int endYear = cal2.get(Calendar.YEAR);
                         int endMonth = cal2.get(Calendar.MONTH);
                         
-                        double duration = (endYear - startYear) + (endMonth - (startMonth-1))/12;
-
+                        double duration = (endYear - startYear) + (endMonth - (startMonth-1))/12.0;
+                        //System.out.println(startYear+" "+ endYear + " "+ startMonth + " "+ endMonth + " ");
                         if (!job.isEmpty()) {
+                            //System.out.println("yes "+k);
                             workExp.setDesc(job);
                             workExpArr.add(workExp);
                             job = new ArrayList<String>();
@@ -139,6 +155,7 @@ public class CVSectionParser {
                         
                         workExp.setDuration(duration);
                         job.add(line);
+                        //System.out.println("line = "+line);
                     } else {
                         job.add(line);
                     }
@@ -147,12 +164,19 @@ public class CVSectionParser {
 
                 workExp.setDesc(job);
                 workExpArr.add(workExp);
-                
-                for (int l = 0; l < workExpArr.size(); l++) {
+                //System.out.println("count = "+count);
+                /*for (int l = 0; l < workExpArr.size(); l++) {
                     System.out.println("desc:" + workExpArr.get(l).getDescription());
                     System.out.println("dur:" + workExpArr.get(l).getDuration());
-                }
+                }*/
                 cvobj.setWorkExp(workExpArr);
+            } else if (header == KEYWORDS.get(2)) {
+                /*for (int m = 0; m < parsedSection.size(); m++) {
+                    System.out.println(parsedSection.get(m));
+                }*/
+                cvobj.setSkills(parsedSection);
+            } else if (header == KEYWORDS.get(5)) {
+                cvobj.setHasReferences();
             }
         }
     }
