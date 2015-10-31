@@ -32,9 +32,9 @@ public class Analyser {
 			cvSkill = cvs.get(i).getSkills();
 			cvEducation = cvs.get(i).getEducation();
 			cvExp = cvs.get(i).getWorkExp();
-			cvProj = cvs.get(i).getProj();
-			cvPublication = cvs.get(i).getPublication();
-			cvLanguage =cvs.get(i).getLanguage();
+			cvProj = cvs.get(i).getProjects();
+			cvPublication = cvs.get(i).getPublications();
+			cvLanguage =cvs.get(i).getLanguages();
 			cvCertification = cvs.get(i).getCertifications();
 			cvSkill.addAll(cvLanguage);
 			cvSkill.addAll(cvCertification);
@@ -120,7 +120,7 @@ public class Analyser {
 		        Matcher matcher = patternForSimilar.matcher(workExp.get(i).getWords().get(k));
 	
 		         for(int j = 0; j < cvExp.size(); j++) {
-		        	 if(cvExp.get(j).getDesc().contains(workExp.get(i).getWords().get(k)) || (matcher.find() && cvExp.get(j).getDesc().contains(position))) {
+		        	 if(cvExp.get(j).getDescription().contains(workExp.get(i).getWords().get(k)) || (matcher.find() && cvExp.get(j).getDescription().contains(position))) {
 					    expNum += cvExp.get(j).getDuration();
 				}
 			}
