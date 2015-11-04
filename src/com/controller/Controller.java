@@ -23,7 +23,6 @@ static ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 	   fileNames.add("C:\\Users\\Ganga\\workspace\\CVAnalyser\\CVs\\DonnaBelleEmbodo.pdf");
 	   fileNames.add("C:\\Users\\Ganga\\workspace\\CVAnalyser\\CVs\\YaminiBhaskar.pdf");
 	   
-	   String jobDesc = convert.convertTxtToPDF("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\jobdesc1.pdf");
 	   parseCVs(fileNames);
 	   parseJobDesc(jobDesc);
 	   
