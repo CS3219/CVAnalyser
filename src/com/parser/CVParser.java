@@ -1,6 +1,7 @@
 package com.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CVParser {
     
@@ -25,6 +26,8 @@ public class CVParser {
     
     public static void main(String[] args) {
         CVParser cvp = new CVParser();
-        cvp.parseCV("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\file1.txt");
+        cvp.parseCV("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\YaminiBhaskar.txt");
+        //JobDescParser jbp = new JobDescParser();
+        //jbp.parseJobDesc("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\jobdesc1.txt");
     }
 }

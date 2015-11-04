@@ -35,9 +35,9 @@ public class Analyser {
 			cvProj = cvs.get(i).getProjects();
 			cvPublication = cvs.get(i).getPublications();
 			cvLanguage =cvs.get(i).getLanguages();
-			cvCertification = cvs.get(i).getCertifications();
+			//cvCertification = cvs.get(i).getCertifications();
 			cvSkill.addAll(cvLanguage);
-			cvSkill.addAll(cvCertification);
+			//cvSkill.addAll(cvCertification);
 			
 			minSkillScore = compareSkill(minSkillReq, cvSkill);
 			extraSkillScore = compareSkill(extraSkillReq, cvSkill);
