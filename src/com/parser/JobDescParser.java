@@ -32,17 +32,21 @@ public class JobDescParser {
 		Headers.add(1,"minimum requirements");
 		Headers.add(2, "preferred qualifications");	
 	}
-	
+	/*
 	public static void main(String[] args) {
 		JobDescParser jp = new JobDescParser();
-		JobDescObject jdo = jp.parseJobDesc("C:\\Users\\x\\Downloads\\JobDesc1.txt");
-		ArrayList<ParsedObject> po = jdo.getMinSkills();
+		JobDescObject jdo = jp.parseJobDesc("C:\\Users\\x\\Documents\\CVAnalyser1\\sample\\JobDesc1.txt");
+		ArrayList<ParsedObject> po = jdo.getBonusSkills();
 		ArrayList<String> words;
 		for(int i=0;i<po.size();i++) {
-			po.get(i).getType();
-			//po.get(i).getWords()
+			System.out.println("Type: "+po.get(i).getType());
+			words = po.get(i).getWords();
+			for(int j=0;j<words.size();j++) {
+				System.out.println(words.get(j));
+			}
+			
 		}
-	}
+	} */
 	public JobDescObject parseJobDesc(String fileName) {
 		
 				PreProcessor pp = new PreProcessor();
@@ -53,14 +57,6 @@ public class JobDescParser {
 				ArrayList<String> responsibilitiesSection, minReq, bonusQualifications, updatedLines;
 				//System.out.println(sections.get(0).getLineNum());
 				//System.out.println(sections.get(1).getLineNum());
-				//String str = "experience 1.5 years. Blah";
-				//Pattern pattern = Pattern.compile("[.]\\s+");
-				//Matcher matcher = pattern.matcher(str);
-				//String split[] = str.split("[.]\\s+");
-				//for(int i=0;i<split.length;i++) {
-					//System.out.println(split[i]);
-				//}
-				//System.out.println(matcher.find());
 				for(int i=1; i<sections.size(); i++) {
 					SectionHeader section = sections.get(i);
 					int lineNum = section.getLineNum();
@@ -69,14 +65,14 @@ public class JobDescParser {
 						//System.out.println("Entered!");
 						if(i!=(sections.size()-1)) {
 						nextLineNum = sections.get(i+1).getLineNum();
-						 responsibilitiesSection = new ArrayList<String> (lines.subList(lineNum,nextLineNum));
+						 responsibilitiesSection = new ArrayList<String> (lines.subList(lineNum + 1 ,nextLineNum));
 						} else {
-							 responsibilitiesSection = new ArrayList<String> (lines.subList(lineNum,lines.size()));
+							 responsibilitiesSection = new ArrayList<String> (lines.subList(lineNum + 1,lines.size()));
 						}
-						System.out.println("Responsibilities section lines: ");
-						for(int j=0;j<responsibilitiesSection.size();j++) {
-						System.out.println(responsibilitiesSection.get(j));
-						}
+						//System.out.println("Responsibilities section lines: ");
+						//for(int j=0;j<responsibilitiesSection.size();j++) {
+						//System.out.println(responsibilitiesSection.get(j));
+						//}
 						responsibilitiesSection = separateByFullStop(responsibilitiesSection);
 						updatedLines = parseNlp(responsibilitiesSection);
 						 parseLines(updatedLines, section.getHeader());
@@ -92,9 +88,9 @@ public class JobDescParser {
 						//System.out.println(minReq.get(j));
 						//}
 						minReq = separateByFullStop(minReq);
-						for(int j=0;j<minReq.size();j++) {
-						System.out.println(minReq.get(j));
-						}
+						//for(int j=0;j<minReq.size();j++) {
+						//System.out.println(minReq.get(j));
+						//}
 						updatedLines = parseNlp(minReq);
 						parseLines(updatedLines, section.getHeader());
 					} else {
@@ -151,21 +147,21 @@ public class JobDescParser {
 			if(matcherEdu.find()) {
 				int index = matcherEdu.start();
 				line = line.substring(index);
-				System.out.println("Education -  " + lines.get(i));
+				//System.out.println("Education -  " + lines.get(i));
 				parseEducation(line,parsed, words);
 			//work exp
 			} else if(matcherWorkExp.find()) {
 				int index = matcherWorkExp.start();
 				line = line.substring(index);
-				System.out.println("Work Exp -  " + lines.get(i));
+				//System.out.println("Work Exp -  " + lines.get(i));
 				parseWorkExp(line,parsed, words,category);
 			//skills	
 			} else {
 				if(category.equalsIgnoreCase(Headers.get(0))) {
-					System.out.println("Responsibilities -  " + lines.get(i));
+					//System.out.println("Responsibilities -  " + lines.get(i));
 					parseResponsibilities(line,parsed,words);
 				} else {
-			System.out.println("Skills -  " + lines.get(i));
+			//System.out.println("Skills -  " + lines.get(i));
 			parseMinBonusSkills(line,parsed, words,category);
 				}
 			}
