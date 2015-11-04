@@ -20,7 +20,7 @@ public class CVSectionParser {
     private static final ArrayList<String> KEYWORDS = new ArrayList<String>
             (Arrays.asList("education", "work experience", "skills", "language", 
              "interests", "refere", "CCA", "extracurricular activities", "volunteer", 
-             "publication", "paper", "project")); 
+             "publication", "paper", "project", "certificat")); 
     
     private static final ArrayList<String> PARAMS = new ArrayList<String>
             (Arrays.asList("NN", "NNS", "NNP", "NNPS", "CD", "JJ"));

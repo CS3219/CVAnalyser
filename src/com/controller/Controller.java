@@ -10,10 +10,36 @@ import com.parser.*;
 import com.storage.*;
 
 public class Controller {
-ArrayList<CVObject> cvs = new ArrayList<CVObject>();
+static ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 
 	public Controller(){
 		
+	}
+
+	public static void main (String[]args) throws IOException{
+	    ConvertPDF convert = new ConvertPDF();
+	   ArrayList<String> fileNames = new ArrayList<String>();
+	   ArrayList<String> newNames = new ArrayList<String>();
+	   fileNames.add("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\DesmondLim.pdf");
+	   fileNames.add("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\DonnaBelleEmbodo.pdf");
+	   fileNames.add("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\YaminiBhaskar.pdf");
+	   
+	   /*for(String file: fileNames){
+	     newNames.add(convert.convertTxtToPDF(file));
+	     System.out.println("file = "+file);
+	   }*/
+	   
+	   for (int i = 0; i < fileNames.size(); i++) {
+	       convert.convertTxtToPDF(fileNames.get(i));
+	       if(i==1){
+	       newNames.add(convert.convertTxtToPDF(fileNames.get(i)));
+	   
+	       }}
+	   
+	   String jobDesc = convert.convertTxtToPDF("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\jobdesc1.pdf");
+	   parseCVs(newNames);
+	   //parseJobDesc(jobDesc);
+	   
 	}
 	/*
 	public ArrayList<ArrayList<String>> processJobDescAndCV(String position,String eduReq,String techSkills, ArrayList<String> CV){
@@ -45,7 +71,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		return results;
 	}
 */	
-	public JobDescObject parseJobDesc(String jobDescFileName){
+	public static JobDescObject parseJobDesc(String jobDescFileName){
 		JobDescParser jobDescParser = new JobDescParser();
 		ConvertPDF convert = new ConvertPDF();
 		ArrayList<JobDescObject> jobDescs = new ArrayList<JobDescObject>();
@@ -61,7 +87,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 			return jobDescriptions;
 	}
 	
-	public ArrayList<CVObject> parseCVs(ArrayList<String> cvsFileName) {
+	public static ArrayList<CVObject> parseCVs(ArrayList<String> cvsFileName) {
 		CVParser cvParser = new CVParser();
 		ConvertPDF convert = new ConvertPDF();
 
@@ -111,8 +137,5 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		
 //	}
 	
-
-
-
 	 
 }

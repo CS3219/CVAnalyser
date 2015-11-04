@@ -11,7 +11,7 @@ public class ConvertPDF {
 	       String txtFilename = fileName.replace(".pdf", ".txt"); 
 	       PrintWriter writer = new PrintWriter(txtFilename, "UTF-8");
 	       writer.println(pdfconverter.ToText());
-	       System.out.println(pdfconverter.ToText());
+	       //System.out.println(pdfconverter.ToText());
 	       writer.close();    
 	    return txtFilename;
 	}
