@@ -1,0 +1,113 @@
+Page1
+Yamini Bhaskar
+Operations Manager at Holmusk
+Experience
+Operations Manager  at   Holmusk
+July 2015  -  Present (4 months)
+Holmusk is an innovative telehealth platform that uses data (analytics, visualization, prediction, signaling
+ etc.) to tackle chronic diseases and influence positive health outcomes.  My role as an Ops Manager involves
+ connecting with partners, collaborators and users Startup-related tasks:creating presentations,market research
+ and managing the daily operations of the company
+Junior Trainer/Presenter  at   Wildlife Reserves Singapore
+July 2010  -  Present (5 years 4 months)
+Presenting animal shows Husbandry of animals Enrichment Educating visitors about animal conservation
+PHD Researcher  at   Nanyang Technological University (NTU Singapore)
+January 2014  -  November 2014  (11 months)
+Functional studies about the neural circuitry in the brain and how it changes under stress using resilient
+ models.
+Research Associate  at   Nanyang Technological University
+November 2012  -  January 2014  (1 year 3 months)
+Neuroscience research on stress and resilience using animal models.
+Research Intern  at   Genome Institute of Singapore at A*Star
+August 2012  -  September 2012  (2 months)
+Worked on identifying biomarkers that play an important role in targeted cancer therapy. Data mining to
+ identify biomarkers in existence and their relevant drug responses in targeted cancer therapy.
+Languages
+Tamil (Native or bilingual proficiency)
+Hindi (Full professional proficiency)
+Kannada (Native or bilingual proficiency)
+English (Native or bilingual proficiency)
+Projects
+Brain computer interfacing by EEG modulation
+March 2009 to November 2009
+Members:Yamini B., vinoth S., Uma Bhavani
+Page2
+Designed and constructed a Brain Computer Interface (BCI) using LABVIEW and ELVIS to detect visually
+ evoked potentials and train users to control the glowing of an LED on the computer screen by voluntary
+ electroencephalogram (EEG) modulation. This BCI system requires only two electrodes, and has a relatively
+ short training time for both the user and the machine. This will be greatly beneficial for paralytic patients.
+Auto tracking of movement of a mouse in a maze using LabVIEW:
+May 2009 to May 2010
+Members:Yamini B., vinoth S., Uma Bhavani, Thenmozhi
+Designed and constructed a system to automatically track the movements of mice in an 8 arm radial maze.
+ We used IR sensors fitted into the sides of each arm of the maze and connected that to a PCB which was
+ connected to the computer with LabVIEW. This maze is designed to perform studies on the spatial learning
+ and memory of rodents. The basic information necessary to the researchers is the entry of the mouse in each
+ arm and the time spent by the mouse in each arm. Using the analog circuit as well as LabVIEW we were able
+ to provide the above information. 
+Design of a motion capture system for upper limb movement analysis
+March 2011 to December 2011
+Members:Yamini B.
+Designed an optimal system to track the upper limb movement of normal subjects performing activities of
+ daily living using Qualysis Motion Tracking system and addressed issues such as occlusion of markers and
+ space constraints to provide a stable and reliable system for future trials to be conducted on stroke patients in
+ hospitals.
+Honors and Awards
+First place in paper presentation at national level technical symposium
+Anna University
+March 2009
+Presented a paper titled "Use of biomaterials in tissue engineering" and was awarded the first place for that
+ presentation.
+Second place in paper presentation at inter collegiate symposium
+Jerusalem College of Engineering
+September 2008
+Presented a paper titled "Use of Neural Networks in Breast Cancer Detection" 
+First place in poster designing competition
+Bannari Amman Institute of Technology
+October 2009
+Designed a poster on the theme "Global opportunites and challenges of Technical Students" in the 12th ISTE
+ Students' National Convention.
+Volunteer Experience
+Volunteer teacher  at   SINDA
+Page3
+August 2011  -  Present (4 years 3 months)
+Conduct reading classes for children on weekends to help them improve their english reading skills.
+Certifications
+RCULA
+       September 2012
+Skills & Expertise
+Matlab
+Labview
+Biomedical Engineering
+Image Processing
+Microsoft Office
+Biomaterials
+Molecular Biology
+Medical Devices
+Microsoft Excel
+Medical Research
+Qualysis
+Motion Capture
+Data Mining
+Real-time Data Acquisition
+Photoshop
+Education
+Nanyang Technological University
+MSc, Biomedical Engineering, 2010 - 2011
+Anna University
+Bachelor of Engineering (B.E.), Biomedical/Medical Engineering, 2006 - 2010
+Activities and Societies:  Student council, NGO-Third Vision
+Bishop Cotton's womens christian college
+2004 - 2006
+Activities and Societies:  Modelling, Dancing
+Interests
+Animals, writing, reading, artwork, travelling
+Organizations
+Madras Crocodile Bank Trust
+Goodwill Ambassador
+June 2015 to Present
+Page4
+Yamini Bhaskar
+Operations Manager at Holmusk
+Contact Yamini on LinkedIn
+

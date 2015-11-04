@@ -1,8 +1,0 @@
-Lakshmi Menon
-education
-did masters in comp sci in 2016 from berkeley
-graduated with bachelors in comp sci from nus in 2012 with first class honours
-skills
-c++, java
-eclipse ide
-html, xml
