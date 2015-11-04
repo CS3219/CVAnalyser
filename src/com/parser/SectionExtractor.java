@@ -19,7 +19,7 @@ public class SectionExtractor {
                 "CCA", "extracurricular activities")); 
     private static final ArrayList<String> KEYWORDS_JOBDESC = new ArrayList<String>
             (Arrays.asList("minimal requirements")); //to be completed*/
-    
+
     private static final String KEYWORD_NAME = "name";
     /*private static final ArrayList<String> PARAMS = new ArrayList<String>
             (Arrays.asList("NN", "NNS", "NNP", "NNPS", "CD"));*/
@@ -28,32 +28,40 @@ public class SectionExtractor {
     //private String head = " "; 
 
     public ArrayList<SectionHeader> extractSections(ArrayList<String> file, ArrayList<String> KEYWORDS) {
-        int i = 0, countSecLines = 0;
+        int i = 0;//, countSecLines = 0;
         ArrayList<SectionHeader> sectionIndices = new ArrayList<SectionHeader>();
         //String head = null;
-        
+
         sectionIndices.add(new SectionHeader(i, KEYWORD_NAME)); //name
         i++;
-        
+
         for (; i < file.size(); i++) {
             String header = parseSection(file.get(i), KEYWORDS);
-
-            if (header == null) {
-                countSecLines++;
-            } else {
-                if (countSecLines != 0) {
-                    countSecLines = 0;
-                    sectionIndices.add(new SectionHeader(i, header));
-                    //System.out.println("index = "+i);
-                    //System.out.println("header="+header);
-                }
+            
+            if (header != null) {
+                sectionIndices.add(new SectionHeader(i, header));
+                System.out.println("index = "+i);
+                System.out.println("header = "+header); 
             }
+            //
+            /*if (header == null) {
+                //countSecLines++;
+                //System.out.println("line123 = "+file.get(i));
+            } else {
+                System.out.println("header123 = "+header);
+                //if (countSecLines != 0) {
+                //countSecLines = 0;
+                sectionIndices.add(new SectionHeader(i, header));
+                System.out.println("index = "+i);
+                System.out.println("header = "+header);
+                //}
+            }*/
         }
-        
+
         return sectionIndices;
     }
-    
-    
+
+
     /*public CVObject extractSections(String filename) throws ClassCastException, ClassNotFoundException {
         BufferedReader br = null;
         SectionParser sp = new SectionParser();
@@ -77,7 +85,7 @@ public class SectionExtractor {
 
             while ((curLine = br.readLine()) != null) {
                 header = parseSection(curLine);
-                
+
                 if (header == null) {
                     section.add(curLine);
                 } else if (header != head) {
@@ -111,7 +119,7 @@ public class SectionExtractor {
             //System.out.println("yes line = ."+line.trim()+".");
             return checkedLine;
         }
-        
+
         /*StringTokenizer tokenizer = new StringTokenizer(line);
 
         if (tokenizer.hasMoreTokens()) {
@@ -121,12 +129,14 @@ public class SectionExtractor {
                 return firstWord;
             }
         }*/
-        //return null;
+    //return null;
     //}
 
     private String parseSection(String strToCompare, ArrayList<String>list) {
+
         for(String str:list) {
             if(str.toLowerCase().contains(strToCompare) || strToCompare.toLowerCase().contains(str)) {
+                //System.out.println("line = "+strToCompare);
                 StringTokenizer tokens = new StringTokenizer(strToCompare);
                 if (tokens.countTokens() < 5) {
                     //System.out.println("str = "+str);
@@ -179,7 +189,7 @@ public class SectionExtractor {
                        // System.out.println(word+pos);
                         line += word + " ";
                     }
-                    
+
                 }
 
                 // this is the parse tree of the current sentence
@@ -189,7 +199,7 @@ public class SectionExtractor {
                 // this is the Stanford dependency graph of the current sentence
                 //SemanticGraph dependencies = sentence.get(CollapsedCCProcessedDependenciesAnnotation.class);
             }
-            
+
             if (line.length() > 1) {
                 System.out.println("line = "+line);
                 section.set(i, line);

@@ -94,11 +94,11 @@ public class CVSectionParser {
     private void setSection(CVObject cvobj, String header,
             ArrayList<String> parsedSection) {
         if (header == KEYWORDS.get(0)) {
-            System.out.println("***************************************");
+            /*System.out.println("***************************************");
             System.out.println("header = "+header);
             for (int m = 0; m < parsedSection.size(); m++) {
                 System.out.println(parsedSection.get(m));
-            }
+            }*/
             cvobj.setEducation(parsedSection);
         } else if (header == KEYWORDS.get(1) || header == KEYWORDS.get(9) || header == KEYWORDS.get(10) || 
                 header == KEYWORDS.get(11) || header == KEYWORDS.get(13)) { 
@@ -106,11 +106,11 @@ public class CVSectionParser {
             parseExpObj(cvobj, header, parsedSection);
 
         } else if (header == KEYWORDS.get(2)) {
-            System.out.println("***************************************");
+            /*System.out.println("***************************************");
             System.out.println("header = "+header);
             for (int m = 0; m < parsedSection.size(); m++) {
                 System.out.println(parsedSection.get(m));
-            }
+            }*/
             cvobj.setSkills(parsedSection);
         } else if (header == KEYWORDS.get(5)) {
             cvobj.setHasReferences();
@@ -214,12 +214,12 @@ public class CVSectionParser {
             exp.setDesc(job);
             expArr.add(exp);
         }
-        System.out.println("***************************************");
+        /*System.out.println("***************************************");
         System.out.println("header = "+header);
         for (int l = 0; l < expArr.size(); l++) {
             System.out.println("desc:" + expArr.get(l).getDescription());
             System.out.println("dur:" + expArr.get(l).getDuration());
-        }
+        }*/
 
         if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13)){
             cvobj.setWorkExp(expArr);
