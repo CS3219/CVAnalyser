@@ -17,28 +17,15 @@ static ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 	}
 
 	public static void main (String[]args) throws IOException{
-	    ConvertPDF convert = new ConvertPDF();
 	   ArrayList<String> fileNames = new ArrayList<String>();
 	   ArrayList<String> newNames = new ArrayList<String>();
-	   fileNames.add("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\DesmondLim.pdf");
-	   fileNames.add("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\DonnaBelleEmbodo.pdf");
-	   fileNames.add("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\YaminiBhaskar.pdf");
-	   
-	   /*for(String file: fileNames){
-	     newNames.add(convert.convertTxtToPDF(file));
-	     System.out.println("file = "+file);
-	   }*/
-	   
-	   for (int i = 0; i < fileNames.size(); i++) {
-	       convert.convertTxtToPDF(fileNames.get(i));
-	       if(i==1){
-	       newNames.add(convert.convertTxtToPDF(fileNames.get(i)));
-	   
-	       }}
+	   fileNames.add("C:\\Users\\Ganga\\workspace\\CVAnalyser\\CVs\\DesmondLim.pdf");
+	   fileNames.add("C:\\Users\\Ganga\\workspace\\CVAnalyser\\CVs\\DonnaBelleEmbodo.pdf");
+	   fileNames.add("C:\\Users\\Ganga\\workspace\\CVAnalyser\\CVs\\YaminiBhaskar.pdf");
 	   
 	   String jobDesc = convert.convertTxtToPDF("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\jobdesc1.pdf");
-	   parseCVs(newNames);
-	   //parseJobDesc(jobDesc);
+	   parseCVs(fileNames);
+	   parseJobDesc(jobDesc);
 	   
 	}
 	/*
