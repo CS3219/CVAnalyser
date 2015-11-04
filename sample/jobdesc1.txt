@@ -1,29 +1,29 @@
-Responsibilities -  
+ 
+ Responsibilities -  
 Work on, improve and develop our front-end client with some new features and an impressive user 
 interface. Work with the backend team to come up with APIs and sync data across platform. Work 
 across teams in a project based way and be involved in feature creations, product enhancements and 
 experiments throughout the entire development lifecycle, from databases over backend and APIs to 
-frontend and user experience Be part of a strong team that passionately believes in what it does Get 
-exceptional career opportunities  
+frontend and user experience. Be part of a strong team that passionately believes in what it does. Get 
+exceptional career opportunities. 
 Minimum Requirements -  
 Bachelor degree in computer science or a related field  
 At least 1.5 year of relevant work experience with iOS application development, published apps or 
 significant demonstrable equivalent expertise. Programming experience in Swift. Ability to follow 
 necessary software engineering practices - documentation, testing, etc. Strong foundation in UIKit 
 and CoreAnimation including UIKitDynamics and custom CATransitions. Experience with 
-multithreaded programming and concurrency in iOS Strong foundation in Autolayout and Size Classes 
-Experience in architecting and optimizing persistent storage solutions in iOS 
+multithreaded programming and concurrency in iOS Strong foundation in Autolayout and Size 
+Classes. Experience in architecting and optimizing persistent storage solutions in iOS. 
 Preferred Qualifications -  
 Considerable programming experience in Swift and Objective-C/C++. Deep technical knowledge of 
-Cocoa touch ecosystem and iOS development paradigms such as MVC, VIPER etc. 
-(http://www.objc.io/issue-13/viper.html). Experience writing unit and integration tests with Xcode. 
-Knowledge of frameworks that can enhance user experience (such as Facebook's Pop 
-(https://github.com/facebook/pop)) MVP application design and complex, reactive touch-based User 
-Experience. Good Contribution to the open source community (Cocoa Control contributions would be 
-interesting) Strong foundation in computer science, with competencies in data structures, algorithms 
-and software design optimized for embedded systems. Strong experience with designing and 
-architecting client-server based apps on iOS. Passion for healthcare and making the world a better 
-place  
+Cocoa touch ecosystem and iOS development paradigms such as MVC, VIPER etc. Experience 
+writing unit and integration tests with Xcode. Knowledge of frameworks that can enhance user 
+experience (such as Facebook's Pop) MVP application design and complex, reactive touch-based 
+User Experience. Good Contribution to the open source community (Cocoa Control contributions 
+would be interesting). Strong foundation in computer science, with competencies in data structures, 
+algorithms and software design optimized for embedded systems. Strong experience with designing 
+and architecting client-server based apps on iOS. Passion for healthcare and making the world a 
+better place. 
 Location -  
-Applicants should not be barred from working in Singapore 
+Applicants should not be barred from working in Singapore. 
 
