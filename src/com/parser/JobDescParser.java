@@ -32,11 +32,12 @@ public class JobDescParser {
 		Headers.add(1,"minimum requirements");
 		Headers.add(2, "preferred qualifications");	
 	}
+	
 	/*
 	public static void main(String[] args) {
 		JobDescParser jp = new JobDescParser();
 		JobDescObject jdo = jp.parseJobDesc("C:\\Users\\x\\Documents\\CVAnalyser1\\sample\\JobDesc1.txt");
-		ArrayList<ParsedObject> po = jdo.getBonusSkills();
+		ArrayList<ParsedObject> po = jdo.getMinWorkExp();
 		ArrayList<String> words;
 		for(int i=0;i<po.size();i++) {
 			System.out.println("Type: "+po.get(i).getType());
@@ -220,21 +221,27 @@ public class JobDescParser {
 			}
 			} else {
 				if(line.matches(".*\\bor\\b.*")) {
+					while(line.matches(".*\\bor\\b.*")) {
 					//System.out.println("Line is: " + line);
 					int index =line.indexOf(" or ");
 					String first = line.substring(0, index);
 					words.add(first.trim());
 					String second = line.substring(index);
-					second = second.replace("or", " ");
-					words.add(second.trim());
+					second = second.replaceFirst("or", " ");
+					line = second;
+					}
+					words.add(line.trim());
 				} else {
 					if(line.matches(".*\\band\\b.*")) {
+						while(line.matches(".*\\band\\b.*")) {
 						int index =line.indexOf(" and ");
 						String first = line.substring(0, index);
 						words.add(first.trim());
 						String second = line.substring(index);
-						second = second.replace("and", " ");
-						words.add(second.trim());
+						second = second.replaceFirst("and", " ");
+						line = second.trim();
+						}
+						words.add(line.trim());
 					}
 					}
 			}
