@@ -30,48 +30,81 @@ public class JobDescParser {
 	public JobDescParser() {
 		Headers.add(0, "responsibilities");
 		Headers.add(1,"minimum requirements");
-		Headers.add(2, "preferred qualifications");
-		
+		Headers.add(2, "preferred qualifications");	
 	}
-	
-	public JobDescObject parseJobDesc(String fileName) {
+	/*
+	public static void main(String[] args) {
+		JobDescParser jp = new JobDescParser();
+		JobDescObject jdo = jp.parseJobDesc("C:\\Users\\x\\Documents\\CVAnalyser1\\sample\\JobDesc1.txt");
+		ArrayList<ParsedObject> po = jdo.getBonusSkills();
+		ArrayList<String> words;
+		for(int i=0;i<po.size();i++) {
+			System.out.println("Type: "+po.get(i).getType());
+			words = po.get(i).getWords();
+			for(int j=0;j<words.size();j++) {
+				System.out.println(words.get(j));
+			}
 			
+		}
+	} */
+	public JobDescObject parseJobDesc(String fileName) {
+		
 				PreProcessor pp = new PreProcessor();
 				ArrayList<String> lines = pp.preprocess(fileName);
-				lines.add(0, null);
+				lines.add(0, "Empty");
 				SectionExtractor Se = new SectionExtractor();
 				ArrayList<SectionHeader>sections = Se.extractSections(lines, Headers);
 				ArrayList<String> responsibilitiesSection, minReq, bonusQualifications, updatedLines;
-				
+				//System.out.println(sections.get(0).getLineNum());
+				//System.out.println(sections.get(1).getLineNum());
 				for(int i=1; i<sections.size(); i++) {
 					SectionHeader section = sections.get(i);
 					int lineNum = section.getLineNum();
 					int nextLineNum; 
-					if(section.getHeader().equalsIgnoreCase("responsibilities")) {
+					if(section.getHeader().equalsIgnoreCase(Headers.get(0))) {
+						//System.out.println("Entered!");
 						if(i!=(sections.size()-1)) {
 						nextLineNum = sections.get(i+1).getLineNum();
-						 responsibilitiesSection = (ArrayList<String>) lines.subList(lineNum,nextLineNum -1);
+						 responsibilitiesSection = new ArrayList<String> (lines.subList(lineNum + 1 ,nextLineNum));
 						} else {
-							 responsibilitiesSection = (ArrayList<String>) lines.subList(lineNum,lines.size()-1);
+							 responsibilitiesSection = new ArrayList<String> (lines.subList(lineNum + 1,lines.size()));
 						}
+						//System.out.println("Responsibilities section lines: ");
+						//for(int j=0;j<responsibilitiesSection.size();j++) {
+						//System.out.println(responsibilitiesSection.get(j));
+						//}
+						responsibilitiesSection = separateByFullStop(responsibilitiesSection);
 						updatedLines = parseNlp(responsibilitiesSection);
 						 parseLines(updatedLines, section.getHeader());
-					} else if(section.getHeader().equalsIgnoreCase("minimum requirements")) {
+					} else if(section.getHeader().equalsIgnoreCase(Headers.get(1))) {
 						if(i!=(sections.size()-1)) {
 							nextLineNum = sections.get(i+1).getLineNum();
-							 minReq = (ArrayList<String>) lines.subList(lineNum,nextLineNum -1);
+							 minReq = new ArrayList<String>(lines.subList(lineNum + 1,nextLineNum));
 							} else {
-								 minReq = (ArrayList<String>) lines.subList(lineNum,lines.size()-1);
+								 minReq = new ArrayList<String> (lines.subList(lineNum + 1,lines.size()));
 							}
+						//System.out.println("Min req section lines: ");
+						//for(int j=0;j<minReq.size();j++) {
+						//System.out.println(minReq.get(j));
+						//}
+						minReq = separateByFullStop(minReq);
+						//for(int j=0;j<minReq.size();j++) {
+						//System.out.println(minReq.get(j));
+						//}
 						updatedLines = parseNlp(minReq);
 						parseLines(updatedLines, section.getHeader());
 					} else {
 						if(i!=(sections.size()-1)) {
 							nextLineNum = sections.get(i+1).getLineNum();
-							 bonusQualifications = (ArrayList<String>) lines.subList(lineNum,nextLineNum -1);
+							 bonusQualifications = new ArrayList<String> (lines.subList(lineNum + 1 ,nextLineNum));
 							} else {
-								 bonusQualifications = (ArrayList<String>) lines.subList(lineNum,lines.size()-1);
+								 bonusQualifications = new ArrayList<String> (lines.subList(lineNum + 1 ,lines.size()));
 							}
+						//System.out.println("Preferred qualifications section lines: ");
+						//for(int j=0;j<bonusQualifications.size();j++) {
+						//System.out.println(bonusQualifications.get(j));
+						//}
+						bonusQualifications = separateByFullStop(bonusQualifications);
 						updatedLines = parseNlp(bonusQualifications);
 						parseLines(updatedLines, section.getHeader());
 					}
@@ -84,7 +117,20 @@ public class JobDescParser {
 		jobDescObject.setResponsibilities(responsibilities);
 		return jobDescObject;
 	}
-	
+	private ArrayList<String> separateByFullStop(ArrayList<String> list) {
+		ArrayList<String> updated = new ArrayList<String>();
+		String line = "";
+		
+		for(int i=0;i<list.size();i++) {
+		line = line + list.get(i).trim() + " ";
+		}
+		String separated[] = line.split("[.]\\s+");
+		for(int j=0;j<separated.length;j++) {
+			updated.add(separated[j]);
+		}
+		return updated;
+	}
+		
 	private void parseLines(ArrayList<String> lines, String category) {
 		for(int i=0;i<lines.size();i++) {
 			String line = lines.get(i);
@@ -96,22 +142,26 @@ public class JobDescParser {
 	
 			Pattern patternWorkExp = Pattern.compile(".*\\d+.*");
 			Matcher matcherWorkExp = patternWorkExp.matcher(line);
-	
+
 			//education line
 			if(matcherEdu.find()) {
 				int index = matcherEdu.start();
 				line = line.substring(index);
+				//System.out.println("Education -  " + lines.get(i));
 				parseEducation(line,parsed, words);
 			//work exp
 			} else if(matcherWorkExp.find()) {
 				int index = matcherWorkExp.start();
 				line = line.substring(index);
+				//System.out.println("Work Exp -  " + lines.get(i));
 				parseWorkExp(line,parsed, words,category);
 			//skills	
 			} else {
-				if(category.equalsIgnoreCase("responsibilities")) {
+				if(category.equalsIgnoreCase(Headers.get(0))) {
+					//System.out.println("Responsibilities -  " + lines.get(i));
 					parseResponsibilities(line,parsed,words);
 				} else {
+			//System.out.println("Skills -  " + lines.get(i));
 			parseMinBonusSkills(line,parsed, words,category);
 				}
 			}
@@ -170,6 +220,7 @@ public class JobDescParser {
 			}
 			} else {
 				if(line.matches(".*\\bor\\b.*")) {
+					//System.out.println("Line is: " + line);
 					int index =line.indexOf(" or ");
 					String first = line.substring(0, index);
 					words.add(first.trim());

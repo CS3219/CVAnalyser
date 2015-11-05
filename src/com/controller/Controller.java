@@ -10,10 +10,22 @@ import com.parser.*;
 import com.storage.*;
 
 public class Controller {
-ArrayList<CVObject> cvs = new ArrayList<CVObject>();
+static ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 
 	public Controller(){
 		
+	}
+
+	public static void main (String[]args) throws IOException{
+	   ArrayList<String> fileNames = new ArrayList<String>();
+	   ArrayList<String> newNames = new ArrayList<String>();
+	   fileNames.add("C:\\Users\\Ganga\\workspace\\CVAnalyser\\CVs\\DesmondLim.pdf");
+	   fileNames.add("C:\\Users\\Ganga\\workspace\\CVAnalyser\\CVs\\DonnaBelleEmbodo.pdf");
+	   fileNames.add("C:\\Users\\Ganga\\workspace\\CVAnalyser\\CVs\\YaminiBhaskar.pdf");
+	   
+	   parseCVs(fileNames);
+	   parseJobDesc(jobDesc);
+	   
 	}
 	/*
 	public ArrayList<ArrayList<String>> processJobDescAndCV(String position,String eduReq,String techSkills, ArrayList<String> CV){
@@ -45,7 +57,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		return results;
 	}
 */	
-	public JobDescObject parseJobDesc(String jobDescFileName){
+	public static JobDescObject parseJobDesc(String jobDescFileName){
 		JobDescParser jobDescParser = new JobDescParser();
 		ConvertPDF convert = new ConvertPDF();
 		ArrayList<JobDescObject> jobDescs = new ArrayList<JobDescObject>();
@@ -61,7 +73,7 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 			return jobDescriptions;
 	}
 	
-	public ArrayList<CVObject> parseCVs(ArrayList<String> cvsFileName) {
+	public static ArrayList<CVObject> parseCVs(ArrayList<String> cvsFileName) {
 		CVParser cvParser = new CVParser();
 		ConvertPDF convert = new ConvertPDF();
 
@@ -111,8 +123,5 @@ ArrayList<CVObject> cvs = new ArrayList<CVObject>();
 		
 //	}
 	
-
-
-
 	 
 }

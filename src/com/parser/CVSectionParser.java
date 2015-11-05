@@ -20,10 +20,14 @@ public class CVSectionParser {
     private static final ArrayList<String> KEYWORDS = new ArrayList<String>
             (Arrays.asList("education", "work experience", "skills", "language", 
              "interests", "refere", "CCA", "extracurricular activities", "volunteer", 
-             "publication", "paper", "project")); 
+             "publication", "paper", "project", "certificat", "experience", "awards")); 
     
     private static final ArrayList<String> PARAMS = new ArrayList<String>
             (Arrays.asList("NN", "NNS", "NNP", "NNPS", "CD", "JJ"));
+    
+    private static final ArrayList<String> IGNORE_LANGUAGE = new ArrayList<String>
+    (Arrays.asList("fluent", "proficient", "reading", "speaking", "writing", 
+            "native", "bilingual", "proficiency", "full", "professional"));
     
     private ArrayList<String> CV;
 
@@ -79,6 +83,7 @@ public class CVSectionParser {
                 //System.out.println("line = "+line);
                 if (line.length() > 1) {
                     parsedSection.add(line);
+                    //System.out.println("line = "+line);
                 }
             }
 
@@ -89,21 +94,25 @@ public class CVSectionParser {
     private void setSection(CVObject cvobj, String header,
             ArrayList<String> parsedSection) {
         if (header == KEYWORDS.get(0)) {
+            /*System.out.println("***************************************");
+            System.out.println("header = "+header);
+            for (int m = 0; m < parsedSection.size(); m++) {
+                System.out.println(parsedSection.get(m));
+            }*/
             cvobj.setEducation(parsedSection);
         } else if (header == KEYWORDS.get(1) || header == KEYWORDS.get(9) || header == KEYWORDS.get(10) || 
-                header == KEYWORDS.get(11)) { 
+                header == KEYWORDS.get(11) || header == KEYWORDS.get(13)) { 
 
             parseExpObj(cvobj, header, parsedSection);
 
         } else if (header == KEYWORDS.get(2)) {
-            /*for (int m = 0; m < parsedSection.size(); m++) {
+            /*System.out.println("***************************************");
+            System.out.println("header = "+header);
+            for (int m = 0; m < parsedSection.size(); m++) {
                 System.out.println(parsedSection.get(m));
             }*/
             cvobj.setSkills(parsedSection);
-        } /*else if (header == KEYWORDS.get(9) || header == KEYWORDS.get(9) || 
-                header == KEYWORDS.get(9)) {
-
-        } */else if (header == KEYWORDS.get(5)) {
+        } else if (header == KEYWORDS.get(5)) {
             cvobj.setHasReferences();
         } else if (header == KEYWORDS.get(8)) {
             cvobj.setHasVolnteerExp();
@@ -119,17 +128,14 @@ public class CVSectionParser {
 
     private String setLine(String header, ArrayList<String> parsedSection, 
             String line, String word, String pos) {
-        if (header == KEYWORDS.get(1)) {
+        if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13)) {
             if (PARAMS.contains(pos) || word.equals("-") || word.equals("to")) {
-                //System.out.println("lemmatized version: "+lemma);
                 line += word + " ";
+                //System.out.println("line: "+line);
             }
         } else if (header == KEYWORDS.get(2) || header == KEYWORDS.get(3)) {
             //System.out.println("lemmatized version: "+lemma+" "+pos);
-            if (PARAMS.contains(pos) && !word.equals("fluent") && !word.equals("proficient")
-                    && !word.equals("reading") && !word.equals("speaking") 
-                    && !word.equals("writing")) {
-
+            if (PARAMS.contains(pos) && !IGNORE_LANGUAGE.contains(word)) {
                 line += word + " ";
             } else if (word.equals(",") || word.equals("and")) {
                 if (line.length() > 1) {
@@ -168,16 +174,16 @@ public class CVSectionParser {
         Parser parser = new Parser();
         for (int k = 0; k < parsedSection.size(); k++) {
             String line = parsedSection.get(k);
-            //System.out.println(line);
+            
             List<DateGroup> groups = parser.parse(line);
 
             if (groups.size() > 0) {
+                //System.out.println(line);
                 double duration = getDuration(groups);
-                //System.out.println(startYear+" "+ endYear + " "+ startMonth + " "+ endMonth + " ");
 
-                if (header == KEYWORDS.get(1)){
+                if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13) || 
+                        header == KEYWORDS.get(11)){
                     if (!job.isEmpty()) {
-                        //System.out.println("yes "+k);
                         exp.setDesc(job);
                         expArr.add(exp);
                         job = new ArrayList<String>();
@@ -196,24 +202,26 @@ public class CVSectionParser {
                 }
                 //System.out.println("line = "+line);
             } else {
-                if (header == KEYWORDS.get(1)){
+                if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13)|| 
+                        header == KEYWORDS.get(11)){
                     job.add(line);
                 }
             }
 
         }
 
-        if (header == KEYWORDS.get(1)){
+        if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13)){
             exp.setDesc(job);
             expArr.add(exp);
         }
-        /*System.out.println("header = "+header);
+        /*System.out.println("***************************************");
+        System.out.println("header = "+header);
         for (int l = 0; l < expArr.size(); l++) {
             System.out.println("desc:" + expArr.get(l).getDescription());
             System.out.println("dur:" + expArr.get(l).getDuration());
         }*/
 
-        if (header == KEYWORDS.get(1)){
+        if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13)){
             cvobj.setWorkExp(expArr);
         } else if (header == KEYWORDS.get(9) || header == KEYWORDS.get(10)){
             cvobj.setPublications(expArr);
@@ -231,7 +239,7 @@ public class CVSectionParser {
         calStart.setTime(start);
         int startYear = calStart.get(Calendar.YEAR);
         int startMonth = calStart.get(Calendar.MONTH);
-
+        
         Date end = new Date();
         if (dates.size() == 2) {
             end = dates.get(1);
@@ -242,6 +250,9 @@ public class CVSectionParser {
         int endYear = calEnd.get(Calendar.YEAR);
         int endMonth = calEnd.get(Calendar.MONTH);
 
+        //System.out.println("start = "+startMonth+ " "+startYear);
+        //System.out.println("end = "+endMonth+ " "+endYear);
+        
         double duration = (endYear - startYear) + (endMonth - (startMonth-1))/12.0;
         return duration;
     }
