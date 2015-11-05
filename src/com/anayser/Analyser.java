@@ -16,7 +16,7 @@ public class Analyser {
 	}
 	
 	public ArrayList<ArrayList<String>> analyse(JobDescObject jobDesc, ArrayList<CVObject> cvs, String position){
-		ArrayList<String> cvSkill, cvEducation, cvLanguage, cvCertification;
+		ArrayList<String> cvSkill, cvEducation, cvLanguage;
 		ArrayList<ExpObject> cvExp, cvProj, cvPublication;
 		ArrayList<ParsedObject> minSkillReq = jobDesc.getMinSkills();
 		ArrayList<ParsedObject> extraSkillReq = jobDesc.getBonusSkills();
@@ -35,9 +35,9 @@ public class Analyser {
 			cvProj = cvs.get(i).getProjects();
 			cvPublication = cvs.get(i).getPublications();
 			cvLanguage =cvs.get(i).getLanguages();
-			cvCertification = cvs.get(i).getCertifications();
+			//cvCertification = cvs.get(i).getCertifications();
 			cvSkill.addAll(cvLanguage);
-			cvSkill.addAll(cvCertification);
+			//cvSkill.addAll(cvCertification);
 			
 			minSkillScore = compareSkill(minSkillReq, cvSkill);
 			extraSkillScore = compareSkill(extraSkillReq, cvSkill);
@@ -178,7 +178,7 @@ public class Analyser {
 						//remind parser to split by "or" "," when bachelor of comp sci or related field in diff index
 						if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find()){
 						//		cvEducation.get(j).contains(eduReq.get(i))){
-							eduNum = 1;
+							eduNum++;
 						} else {
 							prev = "bachelor";
 						}
@@ -190,7 +190,7 @@ public class Analyser {
 						cvEducation.get(j).replaceAll("\\bmaster\\b|\\bphd\\b", "");
 						//remind parser to split by "or" "," when bachelor of comp sci or related field in diff index
 						if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find()){
-							eduNum = 1;
+							eduNum++;
 						} else {
 							prev = "master";
 						}
@@ -202,7 +202,7 @@ public class Analyser {
 						cvEducation.get(j).replaceAll("\\bphd\\b", "");
 						//remind parser to split by "or" "," when bachelor of comp sci or related field in diff index
 						if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find()){
-							eduNum = 1;
+							eduNum++;
 						} else {
 							prev = "phd";
 						}
@@ -214,21 +214,21 @@ public class Analyser {
 						cvEducation.get(j).replaceAll("\\bbachelor\\b|\\bmaster\\b|\\bphd\\b|\\bdiploma\\b", "");
 						//remind parser to split by "or" "," when bachelor of comp sci or related field in diff index
 						if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find()){
-							eduNum = 1;
+							eduNum++;
 						} else {
 							prev = "diploma";
 						}
 					}	
 				} else {
 					if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find() && Pattern.compile("\\b"+ prev + "\\b").matcher(cvEducation.get(j)).find()){
-						eduNum = 1;
+						eduNum++;
 				 }
 				}
 			}
 		}
 		}
 		double eduScore;
-		if(eduNum != 1 && isSimilar) {
+		if(eduNum < 1 && isSimilar) {
 			eduScore = -1;
 		} else {
 		   eduScore = (double)eduNum;
@@ -259,7 +259,7 @@ public class Analyser {
 		         Matcher matcher = pattern.matcher(skillReq.get(i).getWords().get(k));
 				if(matcher.find()) {
 					skillNum++;
-					cvSkill.set(j, "");
+				//	cvSkill.set(j, "");
 					System.out.println("skillnum = " + skillNum);
 				}
 			}
