@@ -1,7 +1,6 @@
 package com.parser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CVParser {
     
