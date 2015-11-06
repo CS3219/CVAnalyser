@@ -125,9 +125,14 @@ public class Analyser {
 			}
 			for(int k = 1; k < workExp.get(i).getWords().size(); k++){
 		        Matcher matcher = patternForSimilar.matcher(workExp.get(i).getWords().get(k));
-	
+		        String[] tempForComma = workExp.get(i).getWords().get(k).split(",");
+		        workExp.get(i).getWords().set(k, tempForComma[0]);
+		        for(int o = 1; o < tempForComma.length; o++) {
+		        	  workExp.get(i).getWords().add(o+k,tempForComma[o]);
+		        }
 		        workExp.get(i).getWords().set(k, workExp.get(i).getWords().get(k).replaceAll("\\s+", " "));
 		        workExp.get(i).getWords().set(k, workExp.get(i).getWords().get(k).trim());
+		      
 		         for(int j = 0; j < cvExp.size(); j++) {
 		        	 
 		        //	temp = cvExp.get(j).getDescription().get(index)
@@ -152,6 +157,9 @@ public class Analyser {
 		        		 }
 		        		 System.out.println("word length = "+ word.length);
 		        		 if(count == word.length){
+		        			 if(cvExp.get(j).getDuration() == 0) {
+	        					 expNum += 1;
+	        				}
 		        			 expNum += cvExp.get(j).getDuration();
 		        			 System.out.println("expNum = " + expNum + " cv = " + cvExp.get(j).getDuration());
 		        		 }
@@ -170,6 +178,9 @@ public class Analyser {
 				        				// }
 		        			 }
 		        			if(count == wordForPosition.length){
+		        				if(cvExp.get(j).getDuration() == 0) {
+		        					 expNum += 1;
+		        				}
 		        			 expNum += cvExp.get(j).getDuration();
 		        		 }
 		        		 count = 0;
