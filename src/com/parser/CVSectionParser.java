@@ -29,6 +29,10 @@ public class CVSectionParser {
     (Arrays.asList("fluent", "proficient", "reading", "speaking", "writing", 
             "native", "bilingual", "proficiency", "full", "professional"));
     
+    private static final ArrayList<String> MONTHS = new ArrayList<String>
+    (Arrays.asList("jan", "feb", "mar", "apr", "may", 
+            "jun", "jul", "aug", "sept", "oct", "nov", "dec"));
+    
     private ArrayList<String> CV;
 
     public CVObject parseCV(ArrayList<String> cv) {
@@ -81,7 +85,9 @@ public class CVSectionParser {
                     }
                 }                
                 //System.out.println("line2 = "+line);
-                if ((header != KEYWORDS.get(1) && header != KEYWORDS.get(13)) 
+                if ((header != KEYWORDS.get(1) && header != KEYWORDS.get(9) && 
+                        header != KEYWORDS.get(10) && header != KEYWORDS.get(11) && 
+                        header != KEYWORDS.get(13)) 
                         && line.length() > 1) {
                     parsedSection.add(line);
                     line = "";
@@ -96,8 +102,11 @@ public class CVSectionParser {
     private String addToLine(String header, ArrayList<String> parsedSection, 
             String line, String word, String pos) {
         
-        if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13)) {
-            if (PARAMS.contains(pos) || word.equals("-") || word.equals("to") || word.equals(".")) {
+        if (header == KEYWORDS.get(1) || header == KEYWORDS.get(9) || 
+                header == KEYWORDS.get(10) || header == KEYWORDS.get(11) || 
+                header == KEYWORDS.get(13)) {
+            if (PARAMS.contains(pos) || word.equals("-") || word.equals("to") || 
+                    word.equals(".") || isMonth(word)) {
                 if (word.equals(".")) {
                     if (line.length() > 1) {
                         //System.out.println("line1 = "+line);
@@ -121,12 +130,22 @@ public class CVSectionParser {
             }
         } else {
             if (PARAMS.contains(pos)) {
+                //System.out.println("adding line: "+line);
                 line += word + " ";
             }
         }
         return line;
     }
     
+    private boolean isMonth(String word) {
+        for(String str: MONTHS) {
+            if(word.startsWith(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void setSection(CVObject cvobj, String header,
             ArrayList<String> parsedSection) {
         if (header == KEYWORDS.get(0)) {
@@ -136,8 +155,9 @@ public class CVSectionParser {
                 System.out.println(parsedSection.get(m));
             }*/
             cvobj.setEducation(parsedSection);
-        } else if (header == KEYWORDS.get(1) || header == KEYWORDS.get(9) || header == KEYWORDS.get(10) || 
-                header == KEYWORDS.get(11) || header == KEYWORDS.get(13)) { 
+        } else if (header == KEYWORDS.get(1) || header == KEYWORDS.get(9) || 
+                header == KEYWORDS.get(10) || header == KEYWORDS.get(11) || 
+                header == KEYWORDS.get(13)) { 
 
             parseExpObj(cvobj, header, parsedSection);
 
@@ -221,13 +241,16 @@ public class CVSectionParser {
 
         }
 
-        if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13)){
+        if (header == KEYWORDS.get(1) || header == KEYWORDS.get(9) || 
+                header == KEYWORDS.get(10) || header == KEYWORDS.get(11) || 
+                header == KEYWORDS.get(13)){
             exp.setDesc(job);
             expArr.add(exp);
         }
         /*System.out.println("***************************************");
         System.out.println("header = "+header);
         for (int l = 0; l < expArr.size(); l++) {
+            System.out.println("desc"+(l+1));
             for (int g = 0; g < expArr.get(l).getDescription().size(); g++) {
                 System.out.println("desc:" + expArr.get(l).getDescription().get(g));
             }
