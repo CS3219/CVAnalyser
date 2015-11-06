@@ -48,8 +48,8 @@ public class JobDescParser {
 			
 		}
 	} */
+	
 	public JobDescObject parseJobDesc(String fileName) {
-		
 				PreProcessor pp = new PreProcessor();
 				ArrayList<String> lines = pp.preprocess(fileName);
 				lines.add(0, "Empty");
@@ -89,9 +89,6 @@ public class JobDescParser {
 						//System.out.println(minReq.get(j));
 						//}
 						minReq = separateByFullStop(minReq);
-						//for(int j=0;j<minReq.size();j++) {
-						//System.out.println(minReq.get(j));
-						//}
 						updatedLines = parseNlp(minReq);
 						parseLines(updatedLines, section.getHeader());
 					} else {
@@ -204,9 +201,11 @@ public class JobDescParser {
 			} else {
 				parsed.setType("and");
 			}
+			//System.out.println(line);
 			if(line.contains(",")){
 			String tokens[] = line.split(",");
 			for(int j=0;j<tokens.length;j++) {
+				//System.out.println(tokens[j]);
 				if(j!=tokens.length-1) {
 					words.add(j, tokens[j].trim());
 				} else {
@@ -270,7 +269,7 @@ public class JobDescParser {
 	    props.put("annotators", "tokenize, ssplit, pos, lemma"); 
 	    StanfordCoreNLP pipeline = new StanfordCoreNLP(props, false);
 	    ArrayList<String> PARAMS = new ArrayList<String> 
-        (Arrays.asList("NN", "NNS", "NNP", "NNPS", "CD", "JJ", "CC"));
+        (Arrays.asList("NN", "NNS", "NNP", "NNPS", "CD", "JJ", "CC", ","));
 	    
 	    for(int i=0;i<lines.size();i++) {
 	    String line = lines.get(i); 
