@@ -7,10 +7,11 @@ public class SectionExtractor {
 
     private static final String KEYWORD_NAME = "name";
 
-    public ArrayList<SectionHeader> extractSections(ArrayList<String> file, ArrayList<String> KEYWORDS) {
-        int i = 0;//, countSecLines = 0;
+    public ArrayList<SectionHeader> extractSections(ArrayList<String> file, 
+            ArrayList<String> KEYWORDS) {
+        
+        int i = 0;
         ArrayList<SectionHeader> sectionIndices = new ArrayList<SectionHeader>();
-        //String head = null;
 
         sectionIndices.add(new SectionHeader(i, KEYWORD_NAME)); //name
         i++;

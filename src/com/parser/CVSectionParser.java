@@ -59,10 +59,10 @@ public class CVSectionParser {
             ArrayList<String> section = getSection(sectionIndices, i), 
                     parsedSection = new ArrayList<String>();
             //System.out.println("header = "+header);
-
+            String line = "";
+            
             for (int j = 0; j < section.size(); j++) {
-                String text = section.get(j); 
-                String line = "";
+                String text = section.get(j);     
                 
                 Annotation document = new Annotation(text);
                 pipeline.annotate(document);
@@ -76,14 +76,16 @@ public class CVSectionParser {
                         //String ne = token.get(NamedEntityTagAnnotation.class); 
                         //System.out.println(word+" "+pos);
 
-                        line = setLine(header, parsedSection, line,
+                        line = addToLine(header, parsedSection, line,
                                 word, pos);
                     }
                 }                
-                //System.out.println("line = "+line);
-                if (line.length() > 1) {
+                //System.out.println("line2 = "+line);
+                if ((header != KEYWORDS.get(1) && header != KEYWORDS.get(13)) 
+                        && line.length() > 1) {
                     parsedSection.add(line);
-                    //System.out.println("line = "+line);
+                    line = "";
+                    //System.out.println("line2 = "+line);
                 }
             }
 
@@ -91,6 +93,40 @@ public class CVSectionParser {
         }
     }
 
+    private String addToLine(String header, ArrayList<String> parsedSection, 
+            String line, String word, String pos) {
+        
+        if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13)) {
+            if (PARAMS.contains(pos) || word.equals("-") || word.equals("to") || word.equals(".")) {
+                if (word.equals(".")) {
+                    if (line.length() > 1) {
+                        //System.out.println("line1 = "+line);
+                        parsedSection.add(line);
+                        line = "";
+                    }
+                } else {
+                    line += word + " ";
+                }
+                //System.out.println("line: "+line);
+            }
+        } else if (header == KEYWORDS.get(2) || header == KEYWORDS.get(3)) {
+            //System.out.println("lemmatized version: "+lemma+" "+pos);
+            if (PARAMS.contains(pos) && !IGNORE_LANGUAGE.contains(word)) {
+                line += word + " ";
+            } else if (word.equals(",") || word.equals("and")) {
+                if (line.length() > 1) {
+                    parsedSection.add(line);
+                }
+                line = "";
+            }
+        } else {
+            if (PARAMS.contains(pos)) {
+                line += word + " ";
+            }
+        }
+        return line;
+    }
+    
     private void setSection(CVObject cvobj, String header,
             ArrayList<String> parsedSection) {
         if (header == KEYWORDS.get(0)) {
@@ -124,31 +160,6 @@ public class CVSectionParser {
 
             cvobj.setLanguages(parsedSection);
         }
-    }
-
-    private String setLine(String header, ArrayList<String> parsedSection, 
-            String line, String word, String pos) {
-        if (header == KEYWORDS.get(1) || header == KEYWORDS.get(13)) {
-            if (PARAMS.contains(pos) || word.equals("-") || word.equals("to")) {
-                line += word + " ";
-                //System.out.println("line: "+line);
-            }
-        } else if (header == KEYWORDS.get(2) || header == KEYWORDS.get(3)) {
-            //System.out.println("lemmatized version: "+lemma+" "+pos);
-            if (PARAMS.contains(pos) && !IGNORE_LANGUAGE.contains(word)) {
-                line += word + " ";
-            } else if (word.equals(",") || word.equals("and")) {
-                if (line.length() > 1) {
-                    parsedSection.add(line);
-                }
-                line = "";
-            }
-        } else {
-            if (PARAMS.contains(pos)) {
-                line += word + " ";
-            }
-        }
-        return line;
     }
 
     private ArrayList<String> getSection(
@@ -217,7 +228,10 @@ public class CVSectionParser {
         /*System.out.println("***************************************");
         System.out.println("header = "+header);
         for (int l = 0; l < expArr.size(); l++) {
-            System.out.println("desc:" + expArr.get(l).getDescription());
+            for (int g = 0; g < expArr.get(l).getDescription().size(); g++) {
+                System.out.println("desc:" + expArr.get(l).getDescription().get(g));
+            }
+            
             System.out.println("dur:" + expArr.get(l).getDuration());
         }*/
 
