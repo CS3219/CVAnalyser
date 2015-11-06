@@ -33,11 +33,11 @@ public class JobDescParser {
 		Headers.add(2, "preferred qualifications");	
 	}
 	
-	
+	/*
 	public static void main(String[] args) {
 		JobDescParser jp = new JobDescParser();
 		JobDescObject jdo = jp.parseJobDesc("C:\\Users\\x\\Documents\\CVAnalyser1\\sample\\JobDesc1.txt");
-		ArrayList<ParsedObject> po = jdo.getMinWorkExp();
+		ArrayList<ParsedObject> po = jdo.getBonusSkills();
 		ArrayList<String> words;
 		for(int i=0;i<po.size();i++) {
 			System.out.println("Type: "+po.get(i).getType());
@@ -47,8 +47,7 @@ public class JobDescParser {
 			}
 			
 		}
-	} 
-	
+	} */
 	public JobDescObject parseJobDesc(String fileName) {
 				PreProcessor pp = new PreProcessor();
 				ArrayList<String> lines = pp.preprocess(fileName);
@@ -207,7 +206,15 @@ public class JobDescParser {
 			}
 			//System.out.println(line);
 			if(line.contains(",")){
+			//System.out.println("line with comma: " + line);
 			String tokens[] = line.split(",");
+			if((line.matches(".*\\b(or|and)\\b.*"))) {
+				if(line.matches(".*\\bor\\b.*")) {
+					extractOr(line,words);
+				} else {
+					extractAnd(line, words);	
+			} 
+			}else {
 			for(int j=0;j<tokens.length;j++) {
 				//System.out.println(tokens[j]);
 				if(j!=tokens.length-1) {
@@ -222,30 +229,12 @@ public class JobDescParser {
 					words.add(last.trim());
 				}
 			}
+			}
 			} else {
 				if(line.matches(".*\\bor\\b.*")) {
-					while(line.matches(".*\\bor\\b.*")) {
-					//System.out.println("Line is: " + line);
-					int index =line.indexOf(" or ");
-					String first = line.substring(0, index);
-					words.add(first.trim());
-					String second = line.substring(index);
-					second = second.replaceFirst("or", " ");
-					line = second;
-					}
-					words.add(line.trim());
+					extractOr(line,words);
 				} else {
-					if(line.matches(".*\\band\\b.*")) {
-						while(line.matches(".*\\band\\b.*")) {
-						int index =line.indexOf(" and ");
-						String first = line.substring(0, index);
-						words.add(first.trim());
-						String second = line.substring(index);
-						second = second.replaceFirst("and", " ");
-						line = second.trim();
-						}
-						words.add(line.trim());
-					}
+					extractAnd(line, words);
 					}
 			}
 		} else {
@@ -261,6 +250,31 @@ public class JobDescParser {
 		}
 		parsed.setWords(words);
 		return parsed;
+	}
+
+private void extractOr(String line, ArrayList<String> words) {
+	while(line.matches(".*\\bor\\b.*")) {
+		int index =line.indexOf(" or ");
+		String first = line.substring(0, index);
+		words.add(first.trim());
+		String second = line.substring(index);
+		second = second.replaceFirst("or", " ");
+		line = second;
+		}
+		words.add(line.trim());
+}
+	private void extractAnd(String line, ArrayList<String> words) {
+		if(line.matches(".*\\band\\b.*")) {
+			while(line.matches(".*\\band\\b.*")) {
+			int index =line.indexOf(" and ");
+			String first = line.substring(0, index);
+			words.add(first.trim());
+			String second = line.substring(index);
+			second = second.replaceFirst("and", " ");
+			line = second.trim();
+			}
+			words.add(line.trim());
+		}
 	}
 	
 	private void parseResponsibilities(String line, ParsedObject parsed, ArrayList<String> words) {
