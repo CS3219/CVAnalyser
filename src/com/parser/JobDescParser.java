@@ -140,7 +140,7 @@ public class JobDescParser {
 			Pattern patternEdu = Pattern.compile(".*\\bbachelor|masters|phd|diploma\\b.*");
 			Matcher matcherEdu = patternEdu.matcher(line);
 	
-			Pattern patternWorkExp = Pattern.compile(".*\\d+.*");
+			Pattern patternWorkExp = Pattern.compile("\\b([1-9]\\d*)\\b");
 			Matcher matcherWorkExp = patternWorkExp.matcher(line);
 
 			//education line
