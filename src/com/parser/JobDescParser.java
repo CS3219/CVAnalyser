@@ -33,7 +33,7 @@ public class JobDescParser {
 		Headers.add(2, "preferred qualifications");	
 	}
 	
-	/*
+	
 	public static void main(String[] args) {
 		JobDescParser jp = new JobDescParser();
 		JobDescObject jdo = jp.parseJobDesc("C:\\Users\\x\\Documents\\CVAnalyser1\\sample\\JobDesc1.txt");
@@ -47,7 +47,7 @@ public class JobDescParser {
 			}
 			
 		}
-	} */
+	} 
 	
 	public JobDescObject parseJobDesc(String fileName) {
 				PreProcessor pp = new PreProcessor();
@@ -90,6 +90,9 @@ public class JobDescParser {
 						//}
 						minReq = separateByFullStop(minReq);
 						updatedLines = parseNlp(minReq);
+						//for(int j=0;j<updatedLines.size();j++) {
+						//System.out.println(updatedLines.get(j));
+						//}
 						parseLines(updatedLines, section.getHeader());
 					} else {
 						if(i!=(sections.size()-1)) {
@@ -179,6 +182,7 @@ public class JobDescParser {
 	private void parseWorkExp(String line, ParsedObject parsed, ArrayList<String> words, String category) {
 		int indexExp = line.indexOf("experience");
 		String duration = line.substring(0, indexExp-1);
+		//System.out.println(duration);
 		words.add(duration.trim());
 		line = line.substring(indexExp+"experience".length());
 		ParsedObject parsedWorkExp = parseSkills(line.trim(),parsed,words);
@@ -207,7 +211,7 @@ public class JobDescParser {
 			for(int j=0;j<tokens.length;j++) {
 				//System.out.println(tokens[j]);
 				if(j!=tokens.length-1) {
-					words.add(j, tokens[j].trim());
+					words.add(tokens[j].trim());
 				} else {
 					String end[] = tokens[j].trim().split(" ");
 					words.add(end[0].trim());
@@ -249,10 +253,10 @@ public class JobDescParser {
 			if(line.contains(",")) {
 			String tokens[] = line.split(",");
 			for(int j=0;j<tokens.length;j++) {
-					words.add(j, tokens[j].trim());	
+					words.add(tokens[j].trim());	
 			}
 		} else {
-			words.add(0,line.trim());
+			words.add(line.trim());
 		}
 		}
 		parsed.setWords(words);
