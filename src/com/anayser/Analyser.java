@@ -50,11 +50,11 @@ public class Analyser {
 			}
 			System.out.println("minEduScore = "+minEduScore+ " minExpScore = "+minExpScore+ " minSkillScore = "+minSkillScore + " extraExpScore = "+extraExpScore);
 			//if one min req is unfulfilled, score = 0
-			if((minWorkExp.size() > 0 && minExpScore == 0.0) || (minEduReq.size() > 0 && minEduScore == 0.0) || (minSkillReq.size() > 0 && minSkillScore == 0.0)) {
-				score = 0.0;
-			} else {
+		//	if((minWorkExp.size() > 0 && minExpScore == 0.0) || (minEduReq.size() > 0 && minEduScore == 0.0) || (minSkillReq.size() > 0 && minSkillScore == 0.0)) {
+			//	score = 0.0;
+			//} else {
 				score = 0.3*minSkillScore + 0.3*minExpScore + 0.3*minEduScore + 0.1*(extraExpScore + extraSkillScore);
-			}
+	//		}
 			
 			ResultDetail resultDetail = new ResultDetail(cvs.get(i).getName(), Double.toString(score), score); 
 			results.add(resultDetail);	
@@ -62,11 +62,11 @@ public class Analyser {
 		sortResults();
 		ArrayList<ArrayList<String>> results_2nd = convert();
 		
-		//for(int k = 0; k < results_2nd.size(); k++) {
-			//for(int j = 0; j<results_2nd.get(k).size(); j++){
-				//System.out.println("results = " + results_2nd.get(k).get(j));
-		//	}
-		//}
+		for(int k = 0; k < results_2nd.size(); k++) {
+			for(int j = 0; j<results_2nd.get(k).size(); j++){
+				System.out.println("results = " + results_2nd.get(k).get(j));
+			}
+		}
 		return results_2nd;
 	}
 
@@ -133,21 +133,23 @@ public class Analyser {
 		        workExp.get(i).getWords().set(k, workExp.get(i).getWords().get(k).replaceAll("\\s+", " "));
 		        workExp.get(i).getWords().set(k, workExp.get(i).getWords().get(k).trim());
 		      
+		    
 		         for(int j = 0; j < cvExp.size(); j++) {
 		        	 
 		        //	temp = cvExp.get(j).getDescription().get(index)
 		        	//		.replaceAll("\\byear(s|)\\b|\\bmonth(s|)\\b|\\bday(s|)\\b", "");
+		        	    System.out.println("cv's size = " + cvExp.get(j).getDuration());
 		        	 for(int y = 0; y < cvExp.get(j).getDescription().size(); y++) {
 		        		 System.out.println("job desc = " + workExp.get(i).getWords().get(k) + " cv = " + cvExp.get(j).getDescription().get(y));
 		        		 word = workExp.get(i).getWords().get(k).split("\\s");
 		        		
 		        		 for(int p = 0; p < word.length; p++){
-		        			 System.out.println("word[p] = "+ word[p] + " p = " + p);
+		        		//	 System.out.println("word[p] = "+ word[p] + " p = " + p);
 		        		
 		        			 if(!word[p].equals("") && Pattern.compile("\\b"+word[p]+"\\b").matcher(cvExp.get(j).getDescription().get(y)).find()){
 		        			//		 cvExp.get(j).getDescription().get(y).contains(word[p]) || (matcher.find() && cvExp.get(j).getDescription().contains(position))) {
 		        				 count++;
-		        				 System.out.println("count = "+ count);
+		        			//	 System.out.println("count = "+ count);
 		        				 } 
 		        			 //else if(word[p].contains("ment") || word[p].contains("tion")) {
 		        				//	 count++;
@@ -155,12 +157,16 @@ public class Analyser {
 		        				 //}
 		        			 
 		        		 }
-		        		 System.out.println("word length = "+ word.length);
+		        	//	 System.out.println("word length = "+ word.length);
 		        		 if(count == word.length){
 		        			 if(cvExp.get(j).getDuration() == 0) {
 	        					 expNum += 1;
-	        				}
+	        				}else if(cvExp.get(j).getDuration() < 0.0) {
+	        					System.out.println("neg");
+	        					 expNum = expNum + (cvExp.get(j).getDuration()*-1);
+	        				} else {
 		        			 expNum += cvExp.get(j).getDuration();
+	        				}
 		        			 System.out.println("expNum = " + expNum + " cv = " + cvExp.get(j).getDuration());
 		        		 }
 		        		 count = 0;
@@ -169,7 +175,7 @@ public class Analyser {
 		        			 String[] wordForPosition = position.split("\\s");
 		        			 for(int u = 0; u < wordForPosition.length; u++){
 		        				
-		        				  if(Pattern.compile("\\b"+wordForPosition[u] +"\\b").matcher(cvExp.get(j).getDescription().get(y)).find()){
+		        				  if(!wordForPosition[u].equals("") && Pattern.compile("\\b"+wordForPosition[u] +"\\b").matcher(cvExp.get(j).getDescription().get(y)).find()){
 		        					  count++;
 		        				  } 
 		        				  //else if(wordForPosition[u].contains("ment")) {
@@ -180,8 +186,13 @@ public class Analyser {
 		        			if(count == wordForPosition.length){
 		        				if(cvExp.get(j).getDuration() == 0) {
 		        					 expNum += 1;
-		        				}
+		        				} else if(cvExp.get(j).getDuration() < 0.0) {
+		        					System.out.println("neg");
+		        					expNum = expNum + (cvExp.get(j).getDuration() * -1);
+		        				} else {
 		        			 expNum += cvExp.get(j).getDuration();
+		        				}
+		        			 System.out.println("expNum = " + expNum + " cv = " + cvExp.get(j).getDuration());
 		        		 }
 		        		 count = 0;
 		        		 }
@@ -191,9 +202,9 @@ public class Analyser {
 			}
 		
 			//now if it doesn't reach 1.5 yrs, score will count as 0
-			if(expNum >= totalNumOfYears) {
+		//	if(expNum >= totalNumOfYears) {
 				expScore += expNum / totalNumOfYears;
-			} 
+		//	} 
 			
 			expNum = 0.0;
 			totalNumOfYears = 0.0;
@@ -349,25 +360,29 @@ public class Analyser {
 				totalNum += skillReq.get(i).getWords().size();
 			}
 			for(int k = 0; k < skillReq.get(i).getWords().size(); k++) {
+				
 				skillReq.get(i).getWords().set(k, bypassUnwanted(skillReq.get(i).getWords().get(k)));
+				skillReq.get(i).getWords().set(k, skillReq.get(i).getWords().get(k).trim());
+				skillReq.get(i).getWords().set(k, skillReq.get(i).getWords().get(k).replaceAll("\\s+", " "));
 			//	if(!skillReq.get(i).getWords().get(k).equals("")){
 				//  skillReq.get(i).getWords().set(k, skillReq.get(i).getWords().get(k).substring(0, skillReq.get(i).getWords().get(k).length()-1));
 				//}
 			//	System.out.println("JD's skill = " + skillReq.get(i).getWords().get(k));
+				
 			for(int j = 0; j < cvSkill.size(); j++) {
-				if(cvSkill.get(j).equals("")) {
-					break;
-				}
+			
 				cvSkill.set(j, bypassUnwanted(cvSkill.get(j)));
 				if(!cvSkill.get(j).equals("") && cvSkill.get(j).endsWith(" ")){
 					cvSkill.set(j, cvSkill.get(j).substring(0, cvSkill.get(j).length()-1));
 					}
+				cvSkill.set(j, cvSkill.get(j).trim());	
+				cvSkill.set(j, cvSkill.get(j).replaceAll("\\s+", " "));	
 				
 				 String patternString = "\\b"+cvSkill.get(j)+"(s|)\\b";
-		//		 System.out.println("cv = " + cvSkill.get(j) + " JD's skill = " + skillReq.get(i).getWords().get(k));
+				// System.out.println("cv = " + cvSkill.get(j) + " JD's skill = " + skillReq.get(i).getWords().get(k));
 		         Pattern pattern =Pattern.compile(patternString);
 		         Matcher matcher = pattern.matcher(skillReq.get(i).getWords().get(k));
-				if(matcher.find()) {
+				if(matcher.find() && !cvSkill.get(j).equals("")) {
 					System.out.println("in");
 					skillNum++;
 					//cvSkill.set(j, "");
