@@ -53,20 +53,22 @@ public class Analyser {
 		//	if((minWorkExp.size() > 0 && minExpScore == 0.0) || (minEduReq.size() > 0 && minEduScore == 0.0) || (minSkillReq.size() > 0 && minSkillScore == 0.0)) {
 			//	score = 0.0;
 			//} else {
-				score = 0.3*minSkillScore + 0.3*minExpScore + 0.3*minEduScore + 0.1*(extraExpScore + extraSkillScore);
+				score = (0.3*minSkillScore + 0.3*minExpScore + 0.3*minEduScore + 0.1*(extraExpScore + extraSkillScore)) * 100;
 	//		}
-			
-			ResultDetail resultDetail = new ResultDetail(cvs.get(i).getName(), Double.toString(score), score); 
+		//		System.out.println("score before decimal = " +score);
+				//String result = String.format("%.2f", value);
+				//Double.toString(score)
+			ResultDetail resultDetail = new ResultDetail(cvs.get(i).getName(),  String.format("%.2f", score), score); 
 			results.add(resultDetail);	
 		}
 		sortResults();
 		ArrayList<ArrayList<String>> results_2nd = convert();
 		
-		for(int k = 0; k < results_2nd.size(); k++) {
-			for(int j = 0; j<results_2nd.get(k).size(); j++){
-				System.out.println("results = " + results_2nd.get(k).get(j));
-			}
-		}
+	//	for(int k = 0; k < results_2nd.size(); k++) {
+		//	for(int j = 0; j<results_2nd.get(k).size(); j++){
+			//	System.out.println("results = " + results_2nd.get(k).get(j));
+	//		}
+	//	}
 		return results_2nd;
 	}
 
@@ -111,7 +113,7 @@ public class Analyser {
 		Pattern patternForSimilar = Pattern.compile("\\bsimilar\\b|\\bequivalent\\b|\\brelevant\\b|\\brelated\\b|\\binterrelated\\b|\\bsame\\b");
 		
 		for(int i = 0; i < workExp.size(); i++) {
-			System.out.println("workExp = " + workExp.get(i).getWords().get(0));
+	//		System.out.println("workExp = " + workExp.get(i).getWords().get(0));
 			temp = workExp.get(i).getWords().get(0).replaceAll("\\d+(.|)\\d+","");
 			year = workExp.get(i).getWords().get(0).replace(temp, "");
 			numOfYears =  Double.parseDouble(year);
@@ -138,9 +140,9 @@ public class Analyser {
 		        	 
 		        //	temp = cvExp.get(j).getDescription().get(index)
 		        	//		.replaceAll("\\byear(s|)\\b|\\bmonth(s|)\\b|\\bday(s|)\\b", "");
-		        	    System.out.println("cv's size = " + cvExp.get(j).getDuration());
+		        	//    System.out.println("cv's size = " + cvExp.get(j).getDuration());
 		        	 for(int y = 0; y < cvExp.get(j).getDescription().size(); y++) {
-		        		 System.out.println("job desc = " + workExp.get(i).getWords().get(k) + " cv = " + cvExp.get(j).getDescription().get(y));
+		        		// System.out.println("job desc = " + workExp.get(i).getWords().get(k) + " cv = " + cvExp.get(j).getDescription().get(y));
 		        		 word = workExp.get(i).getWords().get(k).split("\\s");
 		        		
 		        		 for(int p = 0; p < word.length; p++){
@@ -167,7 +169,7 @@ public class Analyser {
 	        				} else {
 		        			 expNum += cvExp.get(j).getDuration();
 	        				}
-		        			 System.out.println("expNum = " + expNum + " cv = " + cvExp.get(j).getDuration());
+		        			// System.out.println("expNum = " + expNum + " cv = " + cvExp.get(j).getDuration());
 		        		 }
 		        		 count = 0;
 		        		 
@@ -187,12 +189,12 @@ public class Analyser {
 		        				if(cvExp.get(j).getDuration() == 0) {
 		        					 expNum += 1;
 		        				} else if(cvExp.get(j).getDuration() < 0.0) {
-		        					System.out.println("neg");
+		        				//	System.out.println("neg");
 		        					expNum = expNum + (cvExp.get(j).getDuration() * -1);
 		        				} else {
 		        			 expNum += cvExp.get(j).getDuration();
 		        				}
-		        			 System.out.println("expNum = " + expNum + " cv = " + cvExp.get(j).getDuration());
+		        		//	 System.out.println("expNum = " + expNum + " cv = " + cvExp.get(j).getDuration());
 		        		 }
 		        		 count = 0;
 		        		 }
@@ -209,7 +211,7 @@ public class Analyser {
 			expNum = 0.0;
 			totalNumOfYears = 0.0;
 		}
-		System.out.println("expScore = "+ expScore);
+	//	System.out.println("expScore = "+ expScore);
 		
 		return expScore;
 	}
@@ -346,7 +348,7 @@ public class Analyser {
 		   eduScore = (double)eduNum;
 		}
 	
-		System.out.println("eduScore = " +eduScore);
+//		System.out.println("eduScore = " +eduScore);
 		return eduScore;
 		
 	}
@@ -392,7 +394,7 @@ public class Analyser {
 		}
 		}
 		double skillScore = (double)skillNum / totalNum;
-		System.out.println("skillscore = "+skillScore);
+//		System.out.println("skillscore = "+skillScore);
 		return skillScore;
 		
 	}
