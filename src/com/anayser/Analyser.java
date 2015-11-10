@@ -26,9 +26,7 @@ public class Analyser {
 		double minSkillScore = 0.0, extraSkillScore = 0.0, minEduScore = 0.0, minExpScore = 0.0, extraExpScore = 0.0;
 		double score = 0.0;
 
-		//System.out.println("cv size = "+cvs.size());
 		for(int i = 0; i < cvs.size(); i++){
-			System.out.println("cvname = " + cvs.get(i).getName());
 			cvSkill = cvs.get(i).getSkills();
 			cvEducation = cvs.get(i).getEducation();
 			cvExp = cvs.get(i).getWorkExp();
@@ -43,48 +41,41 @@ public class Analyser {
 			minEduScore = compareEdu(minEduReq, cvEducation);
 			
 			minExpScore = compareExp(minWorkExp, cvExp, cvProj, cvPublication, position);
-		//	extraExpScore = compareExp(extraWorkExp, cvExp, cvProj, cvPublication, position);
+			extraExpScore = compareExp(extraWorkExp, cvExp, cvProj, cvPublication, position);
 			
 			if(minEduScore == -1 && minSkillScore > 0.5){
 				minEduScore = 1;
 			}
-			System.out.println("minEduScore = "+minEduScore+ " minExpScore = "+minExpScore+ " minSkillScore = "+minSkillScore + " extraExpScore = "+extraExpScore);
-			//if one min req is unfulfilled, score = 0
-		//	if((minWorkExp.size() > 0 && minExpScore == 0.0) || (minEduReq.size() > 0 && minEduScore == 0.0) || (minSkillReq.size() > 0 && minSkillScore == 0.0)) {
-			//	score = 0.0;
-			//} else {
+			
 				score = (0.3*minSkillScore + 0.3*minExpScore + 0.3*minEduScore + 0.1*(extraExpScore + extraSkillScore)) * 100;
-	//		}
-		//		System.out.println("score before decimal = " +score);
-				//String result = String.format("%.2f", value);
-				//Double.toString(score)
+	
 			ResultDetail resultDetail = new ResultDetail(cvs.get(i).getName(),  String.format("%.2f", score), score); 
 			results.add(resultDetail);	
 		}
 		sortResults();
 		ArrayList<ArrayList<String>> results_2nd = convert();
 		
-	//	for(int k = 0; k < results_2nd.size(); k++) {
-		//	for(int j = 0; j<results_2nd.get(k).size(); j++){
-			//	System.out.println("results = " + results_2nd.get(k).get(j));
-	//		}
-	//	}
+		for(int k = 0; k < results_2nd.size(); k++) {
+			for(int j = 0; j<results_2nd.get(k).size(); j++){
+				System.out.println("results = " + results_2nd.get(k).get(j));
+			}
+		}
 		return results_2nd;
 	}
 
 	private ArrayList<ArrayList<String> > convert() {
 		ArrayList<String> temp = new ArrayList<String>();
 		ArrayList<ArrayList<String>> results_2nd = new ArrayList<ArrayList<String>> ();
-		//System.out.println("size = " + results.size());
+	
 		for(int i = 0; i < results.size(); i++) {
 			temp.add(results.get(i).name);
-			System.out.println("name = " + temp.get(0));
+		
 			temp.add(results.get(i).scoreInString);
-			System.out.println("score = " + temp.get(1));
+		
 			results_2nd.add(new ArrayList<String>());
 			results_2nd.get(i).addAll(temp);
 			temp.clear();
-			//System.out.println("results = " + results_2nd.get(i).get(0));
+			
 		}
 		return results_2nd;
 	}
@@ -113,12 +104,11 @@ public class Analyser {
 		Pattern patternForSimilar = Pattern.compile("\\bsimilar\\b|\\bequivalent\\b|\\brelevant\\b|\\brelated\\b|\\binterrelated\\b|\\bsame\\b");
 		
 		for(int i = 0; i < workExp.size(); i++) {
-	//		System.out.println("workExp = " + workExp.get(i).getWords().get(0));
+
 			temp = workExp.get(i).getWords().get(0).replaceAll("\\d+(.|)\\d+","");
 			year = workExp.get(i).getWords().get(0).replace(temp, "");
 			numOfYears =  Double.parseDouble(year);
 			
-			//System.out.println("numOfYears = " + numOfYears);
 			workExp.get(i).getWords().add(1, workExp.get(i).getWords().get(0).replaceAll("\\d+(.|)\\d+ year(s|)",""));
 			if(workExp.get(i).getType().equals("or")){
 				totalNumOfYears = numOfYears;
@@ -137,39 +127,30 @@ public class Analyser {
 		      
 		    
 		         for(int j = 0; j < cvExp.size(); j++) {
-		        	 
-		        //	temp = cvExp.get(j).getDescription().get(index)
-		        	//		.replaceAll("\\byear(s|)\\b|\\bmonth(s|)\\b|\\bday(s|)\\b", "");
-		        	//    System.out.println("cv's size = " + cvExp.get(j).getDuration());
+		        
 		        	 for(int y = 0; y < cvExp.get(j).getDescription().size(); y++) {
-		        		// System.out.println("job desc = " + workExp.get(i).getWords().get(k) + " cv = " + cvExp.get(j).getDescription().get(y));
 		        		 word = workExp.get(i).getWords().get(k).split("\\s");
 		        		
 		        		 for(int p = 0; p < word.length; p++){
-		        		//	 System.out.println("word[p] = "+ word[p] + " p = " + p);
 		        		
 		        			 if(!word[p].equals("") && Pattern.compile("\\b"+word[p]+"\\b").matcher(cvExp.get(j).getDescription().get(y)).find()){
-		        			//		 cvExp.get(j).getDescription().get(y).contains(word[p]) || (matcher.find() && cvExp.get(j).getDescription().contains(position))) {
+		        		
 		        				 count++;
-		        			//	 System.out.println("count = "+ count);
+		        			
 		        				 } 
-		        			 //else if(word[p].contains("ment") || word[p].contains("tion")) {
-		        				//	 count++;
-		        				 //System.out.println("count = "+ count );
-		        				 //}
+		        			
 		        			 
 		        		 }
-		        	//	 System.out.println("word length = "+ word.length);
+		        	
 		        		 if(count == word.length){
 		        			 if(cvExp.get(j).getDuration() == 0) {
 	        					 expNum += 1;
 	        				}else if(cvExp.get(j).getDuration() < 0.0) {
-	        					System.out.println("neg");
 	        					 expNum = expNum + (cvExp.get(j).getDuration()*-1);
 	        				} else {
 		        			 expNum += cvExp.get(j).getDuration();
 	        				}
-		        			// System.out.println("expNum = " + expNum + " cv = " + cvExp.get(j).getDuration());
+		        		
 		        		 }
 		        		 count = 0;
 		        		 
@@ -180,21 +161,17 @@ public class Analyser {
 		        				  if(!wordForPosition[u].equals("") && Pattern.compile("\\b"+wordForPosition[u] +"\\b").matcher(cvExp.get(j).getDescription().get(y)).find()){
 		        					  count++;
 		        				  } 
-		        				  //else if(wordForPosition[u].contains("ment")) {
-			        				//	 count++;
-				        			//	 System.out.println("count = "+ count );
-				        				// }
+		        				
 		        			 }
 		        			if(count == wordForPosition.length){
 		        				if(cvExp.get(j).getDuration() == 0) {
 		        					 expNum += 1;
 		        				} else if(cvExp.get(j).getDuration() < 0.0) {
-		        				//	System.out.println("neg");
 		        					expNum = expNum + (cvExp.get(j).getDuration() * -1);
 		        				} else {
 		        			 expNum += cvExp.get(j).getDuration();
 		        				}
-		        		//	 System.out.println("expNum = " + expNum + " cv = " + cvExp.get(j).getDuration());
+		        		
 		        		 }
 		        		 count = 0;
 		        		 }
@@ -203,16 +180,13 @@ public class Analyser {
 		        	 }
 			}
 		
-			//now if it doesn't reach 1.5 yrs, score will count as 0
-		//	if(expNum >= totalNumOfYears) {
 				expScore += expNum / totalNumOfYears;
-		//	} 
+	 
 			
 			expNum = 0.0;
 			totalNumOfYears = 0.0;
 		}
-	//	System.out.println("expScore = "+ expScore);
-		
+	
 		return expScore;
 	}
 	
@@ -227,7 +201,6 @@ public class Analyser {
 	
 		Matcher matcher;
 		String prev = "";
-	//	System.out.println("eduReq'size = " + eduReq.size() + " cvEducation.size() = " + cvEducation.size());
 		for(int i = 0; i < eduReq.size(); i++) {
 			for(int k = 0;k < eduReq.get(i).getWords().size(); k++) {
 			matcher = patternForSimilar.matcher(eduReq.get(i).getWords().get(k));
@@ -248,12 +221,10 @@ public class Analyser {
 				cvEducation.set(j,cvEducation.get(j).replaceAll("\\bphd\\b|\\bph.d\\b|\\bdoctorate(s|)\\b|\\bdoctor(s|)\\b|\\bDoctor of Philosophy\\b", "phd"));
 				cvEducation.set(j,cvEducation.get(j).replaceAll("\\bdiploma\\b|\\bdiplomas\\b|\\bpecialist diploma\\b", "diploma"));
 				
-			//	System.out.println("cv = " + cvEducation.get(j) +" job desc = " + eduReq.get(i).getWords().get(k));
 				if(Pattern.compile("\\bbachelor\\b").matcher(eduReq.get(i).getWords().get(k)).find()) {
 					matcher = patternForBE.matcher(cvEducation.get(j));
 					
 					if(matcher.find()) {
-					//	System.out.println("in1");
 						eduReq.get(i).getWords().set(k, eduReq.get(i).getWords().get(k).replaceAll("\\bbachelor\\b", ""));
 						cvEducation.set(j, cvEducation.get(j).replaceAll("\\bbachelor\\b|\\bmaster\\b|\\bphd\\b", ""));
 						
@@ -263,9 +234,8 @@ public class Analyser {
 						eduReq.get(i).getWords().set(k, eduReq.get(i).getWords().get(k).trim());
 						cvEducation.set(j, cvEducation.get(j).trim());
 						
-					//	System.out.println("inCVs = " + cvEducation.get(j) + " injob desc = " + eduReq.get(i).getWords().get(k));
 						if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find()){
-						//		cvEducation.get(j).contains(eduReq.get(i))){
+					
 							eduNum++;
 						} else {
 							prev = "bachelor";
@@ -282,7 +252,7 @@ public class Analyser {
 						
 						eduReq.get(i).getWords().set(k, eduReq.get(i).getWords().get(k).trim());
 						cvEducation.set(j, cvEducation.get(j).trim());
-						//remind parser to split by "or" "," when bachelor of comp sci or related field in diff index
+						
 						if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find()){
 							eduNum++;
 						} else {
@@ -300,7 +270,7 @@ public class Analyser {
 						
 						eduReq.get(i).getWords().set(k, eduReq.get(i).getWords().get(k).trim());
 						cvEducation.set(j, cvEducation.get(j).trim());
-						//remind parser to split by "or" "," when bachelor of comp sci or related field in diff index
+						
 						if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find()){
 							eduNum++;
 						} else {
@@ -318,7 +288,7 @@ public class Analyser {
 						
 						eduReq.get(i).getWords().set(k, eduReq.get(i).getWords().get(k).trim());
 						cvEducation.set(j, cvEducation.get(j).trim());
-						//remind parser to split by "or" "," when bachelor of comp sci or related field in diff index
+						
 						if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find()){
 							eduNum++;
 						} else {
@@ -331,8 +301,7 @@ public class Analyser {
 					
 					eduReq.get(i).getWords().set(k, eduReq.get(i).getWords().get(k).trim());
 					cvEducation.set(j, cvEducation.get(j).trim());
-					
-					//System.out.println("prev = " +prev + " inCVs = " + cvEducation.get(j) + " injob desc = " + eduReq.get(i).getWords().get(k));
+				
 					if(Pattern.compile("\\b"+ eduReq.get(i).getWords().get(k) + "(s|)\\b").matcher(cvEducation.get(j)).find()){
 			
 					       eduNum++;
@@ -347,8 +316,7 @@ public class Analyser {
 		} else {
 		   eduScore = (double)eduNum;
 		}
-	
-//		System.out.println("eduScore = " +eduScore);
+
 		return eduScore;
 		
 	}
@@ -366,11 +334,7 @@ public class Analyser {
 				skillReq.get(i).getWords().set(k, bypassUnwanted(skillReq.get(i).getWords().get(k)));
 				skillReq.get(i).getWords().set(k, skillReq.get(i).getWords().get(k).trim());
 				skillReq.get(i).getWords().set(k, skillReq.get(i).getWords().get(k).replaceAll("\\s+", " "));
-			//	if(!skillReq.get(i).getWords().get(k).equals("")){
-				//  skillReq.get(i).getWords().set(k, skillReq.get(i).getWords().get(k).substring(0, skillReq.get(i).getWords().get(k).length()-1));
-				//}
-			//	System.out.println("JD's skill = " + skillReq.get(i).getWords().get(k));
-				
+		
 			for(int j = 0; j < cvSkill.size(); j++) {
 			
 				cvSkill.set(j, bypassUnwanted(cvSkill.get(j)));
@@ -381,20 +345,18 @@ public class Analyser {
 				cvSkill.set(j, cvSkill.get(j).replaceAll("\\s+", " "));	
 				
 				 String patternString = "\\b"+cvSkill.get(j)+"(s|)\\b";
-				// System.out.println("cv = " + cvSkill.get(j) + " JD's skill = " + skillReq.get(i).getWords().get(k));
+			
 		         Pattern pattern =Pattern.compile(patternString);
 		         Matcher matcher = pattern.matcher(skillReq.get(i).getWords().get(k));
 				if(matcher.find() && !cvSkill.get(j).equals("")) {
-					System.out.println("in");
+
 					skillNum++;
-					//cvSkill.set(j, "");
-				//	System.out.println("skillnum = " + skillNum +" cv = " + cvSkill.get(j)+ " JD's skill = " + skillReq.get(i).getWords().get(k));
+				
 				}
 			}
 		}
 		}
 		double skillScore = (double)skillNum / totalNum;
-//		System.out.println("skillscore = "+skillScore);
 		return skillScore;
 		
 	}
