@@ -21,8 +21,6 @@ public class SectionExtractor {
             
             if (header != null) {
                 sectionIndices.add(new SectionHeader(i, header));
-                //System.out.println("index = "+i);
-                //System.out.println("header = "+header); 
             }
         }
 
@@ -33,10 +31,8 @@ public class SectionExtractor {
 
         for(String str:list) {
             if(str.toLowerCase().contains(strToCompare) || strToCompare.toLowerCase().contains(str)) {
-                //System.out.println("line = "+strToCompare);
                 StringTokenizer tokens = new StringTokenizer(strToCompare);
                 if (tokens.countTokens() < 5) {
-                    //System.out.println("str = "+str);
                     return str;
                 }
             }

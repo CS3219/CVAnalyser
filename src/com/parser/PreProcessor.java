@@ -11,7 +11,6 @@ public class PreProcessor {
 
     public ArrayList<String> preprocess(String filename) {
         BufferedReader br = null;
-        //BufferedWriter bw = null;
         ArrayList<String> lines = new ArrayList<String>();
         
         try {
@@ -37,17 +36,7 @@ public class PreProcessor {
             }
 
             br.close();
-
-            /*bw = new BufferedWriter(new FileWriter(new File(filename)));
-
-            for(String s : lines)
-                bw.write(s);
-
-            bw.flush();
-            bw.close();
-            bw.close();*/
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
@@ -57,17 +46,10 @@ public class PreProcessor {
     private String process(String line) {
         line = line.trim().replaceAll(" +", " ");
         line = line.replaceAll("\t", "");
-        //System.out.println("before"+line);
         line = line.replaceAll("[^\\x00-\\x7F]", "");
-        //System.out.println("after"+line);
         line = line.toLowerCase();
         line = line + "\n";
 
         return line;
     }
-
-    /*public static void main(String[] args) {
-        PreProcessor p = new PreProcessor();
-        p.preprocess("C:\\Users\\Manika\\Documents\\GitHub\\CVAnalyser\\sample\\resume1.txt");
-    }*/
 }
